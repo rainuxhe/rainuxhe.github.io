@@ -60,7 +60,7 @@ languages:
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  description: "Make your lives extraordinary."
+  description: "Make your lives extraordinary!"
   author: Rainux He
 
   defaultTheme: auto
