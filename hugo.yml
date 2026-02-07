@@ -1,4 +1,4 @@
-baseURL: 'https://rainuxhe.github.io/'
+baseURL: 'https://gh.heruos.top/'
 languageCode: "zh"
 DefaultContentLanguage: "zh"
 title: 'Rainux'
@@ -19,7 +19,7 @@ minify:
 
 pagination:
   disableAliases: false
-  pagerSize: 5
+  pagerSize: 7
 
 languages:
   zh:
@@ -73,7 +73,7 @@ languages:
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  description: "Make your life extrodinary"
+  description: "Rainux He's Blog"
   author: Rainux He
 
   defaultTheme: auto
@@ -91,6 +91,12 @@ params:
   ShowToc: true
 
   homeInfoParams:
-    Title: "Rainux field"
+    Title: "Heruos || Rainux || 花酒锄作田"
     Content: >
-      Make your life extrodinary
+      为何而活? 要到哪去? 该做什么? 在做什么?
+  
+# makeup:
+#   highlight:
+#     noClasses: false
+#     lineNos: true
+#     anchorLineNos: true
