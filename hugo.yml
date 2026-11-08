@@ -84,24 +84,30 @@ params:
     extLinkNewTab: true
 
   documents:
-    - id: "fastapi"
-      title: "FastAPI"
-      path: "/docs/fastapi/"
-      description: "异步 Python API 框架的请求处理、依赖注入与数据访问笔记。"
-      icon: "bolt"
-      weight: 10
-    - id: "postgresql"
-      title: "PostgreSQL"
-      path: "/docs/postgresql/"
-      description: "PostgreSQL 日常操作、事务、索引与运维实践。"
-      icon: "database"
-      weight: 20
+    # - id: "fastapi"
+    #   title: "FastAPI"
+    #   path: "/docs/fastapi/"
+    #   description: "异步 Python API 框架的请求处理、依赖注入与数据访问笔记。"
+    #   icon: "bolt"
+    #   weight: 10
+    # - id: "postgresql"
+    #   title: "PostgreSQL"
+    #   path: "/docs/postgresql/"
+    #   description: "PostgreSQL 日常操作、事务、索引与运维实践。"
+    #   icon: "database"
+    #   weight: 20
     - id: "bookstack"
       title: "BookStack"
       path: "/docs/bookstack/"
       description: "BookStack 的安装、配置、Markdown 语法和扩展功能说明。"
       icon: "menu_book"
       weight: 30
+    - id: "a2a"
+      title: "A2A 协议"
+      path: "/docs/a2a/"
+      description: "A2A 协议模型、任务生命周期，以及 Python 服务端和客户端实践。"
+      icon: "hub"
+      weight: 40
 
   flexsearch:
     enabled: true
