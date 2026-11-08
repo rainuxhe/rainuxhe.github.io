@@ -1,0 +1,15 @@
+{{ define "main" }}
+    <section class="bookstack-catalog section">
+        <div class="container">
+            <div class="bookstack-catalog-heading">
+                <span class="bookstack-eyebrow">404 / 页面不存在</span>
+                <h1>这一页不在书架上。</h1>
+                <p class="bookstack-catalog-intro">旧博客链接已经失效，可以从文档入口重新开始。</p>
+                <a class="bookstack-primary-link" href="{{ "docs/" | relLangURL }}">
+                    前往文档书架
+                    <i class="material-icons" aria-hidden="true">arrow_forward</i>
+                </a>
+            </div>
+        </div>
+    </section>
+{{ end }}

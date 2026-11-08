@@ -1,102 +1,118 @@
-baseURL: 'https://gh.heruos.top/'
-languageCode: "zh"
-DefaultContentLanguage: "zh"
-title: 'Rainux'
-theme: ['PaperMod']
+baseURL: "https://gh.heruos.top/"
+languageCode: "zh-cn"
+defaultContentLanguage: "zh"
+title: "Bookstack"
+theme: ["bookstack"]
 
-enableInlineShortcodes: true
+contentDir: "content"
+enableGitInfo: true
 enableRobotsTXT: true
+enableEmoji: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
-enableEmoji: true
 pygmentsUseClasses: true
-mainsections: ["post", "papermod"]
+mainSections: ["docs"]
 
-minify:
-  disableXML: true
-  # minifyOutput: true
+module:
+  hugoVersion:
+    extended: true
+    min: "0.140.0"
+  imports:
+    - path: "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
 
-pagination:
-  disableAliases: false
-  pagerSize: 7
+markup:
+  defaultMarkdownHandler: "goldmark"
+  tableOfContents:
+    startLevel: 1
+    endLevel: 3
+  goldmark:
+    renderer:
+      unsafe: true
+    parser:
+      attribute:
+        block: true
 
-languages:
-  zh:
-    languageName: "中文"
-    weight: 1
-    taxonomies:
-      category: categories
-      tag: tags
-      series: series
-    menu:
-      main:
-        - name: 归档
-          url: archives
-          weight: 5
-        - name: 分类
-          url: categories/
-          weight: 7
-    #     - name: 搜索
-    #       url: search/
-    #       weight: 10
-        - name: 标签
-          url: tags/
-          weight: 10
-        - name: 关于
-          url: about
-          weight: 15
-  en:
-    languageName: "English"
-    weight: 2
-    taxonomies:
-      category: categories
-      tag: tags
-      series: series
-    menu:
-      main:
-        - name: Archive
-          url: archives
-          weight: 5
-        - name: Categories
-          url: categories/
-          weight: 7
-    #     - name: Search
-    #       url: search/
-    #       weight: 10
-        - name: Tags
-          url: tags/
-          weight: 10
-        - name: About
-          url: about
-          weight: 15
+outputs:
+  home: ["HTML"]
+  page: ["HTML"]
+  section: ["HTML"]
+  taxonomy: ["HTML"]
+  term: ["HTML"]
 
 params:
-  env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  description: "Rainux He's Blog"
-  author: Rainux He
+  description: "Bookstack 多文档技术手册"
+  author: "Rainux He"
 
-  defaultTheme: auto
-  # disableThemeToggle: true
-  ShowShareButtons: true
-  ShowReadingTime: true
-  # disableSpecial1stPost: true
-  displayFullLangName: true
-  ShowPostNavLinks: true
-  ShowBreadCrumbs: true
-  ShowCodeCopyButtons: true
-  ShowRssButtonInSectionTermList: true
-  ShowAllPagesInArchive: true
-  ShowPageNums: true
-  ShowToc: true
+  google_fonts:
+    - ["IBM Plex Sans", "400,500,600,700"]
+    - ["IBM Plex Mono", "400,600"]
+  sans_serif_font: "IBM Plex Sans"
+  secondary_font: "IBM Plex Sans"
+  mono_font: "IBM Plex Mono"
 
-  homeInfoParams:
-    Title: "Heruos || Rainux || 花酒锄作田"
-    Content: >
-      为何而活? 要到哪去? 该做什么? 在做什么?
-  
-# makeup:
-#   highlight:
-#     noClasses: false
-#     lineNos: true
-#     anchorLineNos: true
+  footer:
+    copyright: "© :YEAR: Bookstack"
+
+  social:
+    github: "rainuxhe"
+
+  docs:
+    title: "Bookstack"
+    pathName: "docs"
+    darkMode: true
+    prism: true
+    prismTheme: "lotusdocs"
+    repoURL: "https://github.com/rainuxhe/rainuxhe.github.io"
+    repoBranch: "main"
+    editPage: true
+    lastMod: true
+    lastModRelative: true
+    useLastmodTime: false
+    sidebarIcons: false
+    breadcrumbs: true
+    backToTop: true
+    toc: true
+    tocMobile: true
+    scrollSpy: true
+    descriptions: true
+    titleIcon: true
+    navDesc: true
+    navDescTrunc: 48
+    listDescTrunc: 140
+    intLinkTooltip: true
+    extLinkNewTab: true
+
+  documents:
+    - id: "fastapi"
+      title: "FastAPI"
+      path: "/docs/fastapi/"
+      description: "异步 Python API 框架的请求处理、依赖注入与数据访问笔记。"
+      icon: "bolt"
+      weight: 10
+    - id: "postgresql"
+      title: "PostgreSQL"
+      path: "/docs/postgresql/"
+      description: "PostgreSQL 日常操作、事务、索引与运维实践。"
+      icon: "database"
+      weight: 20
+    - id: "markdown-test"
+      title: "Markdown 测试"
+      path: "/docs/markdown-test/"
+      description: "用于检查多级目录、Markdown 语法和内容样式的测试文档。"
+      icon: "science"
+      weight: 30
+
+  flexsearch:
+    enabled: true
+    searchSectionsIndex: ["docs"]
+    tokenize: "full"
+    minQueryChar: 1
+    maxResult: 8
+
+menu:
+  primary:
+    - name: "文档"
+      url: "/docs/"
+      identifier: "docs"
+      weight: 10

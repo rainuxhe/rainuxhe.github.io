@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 44" fill="none">
+  <rect width="44" height="44" rx="12" fill="#243B7A"/>
+  <path d="M9.5 13.5c4.2-1 7.8-.1 11.4 2.4V33c-3.6-2.5-7.2-3.4-11.4-2.4V13.5Z" fill="#F8F3E7"/>
+  <path d="M34.5 13.5c-4.2-1-7.8-.1-11.4 2.4V33c3.6-2.5 7.2-3.4 11.4-2.4V13.5Z" fill="#DCE8FF"/>
+  <path d="M22 16v17" stroke="#243B7A" stroke-width="1.4"/>
+  <path d="M7.5 34h29" stroke="#F1B24A" stroke-width="2.8" stroke-linecap="round"/>
+  <text x="57" y="28" fill="currentColor" font-family="'IBM Plex Sans', sans-serif" font-size="20" font-weight="700" letter-spacing=".4">Bookstack</text>
+</svg>

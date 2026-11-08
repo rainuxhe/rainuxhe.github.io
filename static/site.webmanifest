@@ -1,0 +1,14 @@
+{
+    "name": "Bookstack",
+    "short_name": "Bookstack",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "theme_color": "#243b7a",
+    "background_color": "#fbfaf5",
+    "display": "standalone"
+}

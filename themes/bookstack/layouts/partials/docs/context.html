@@ -1,0 +1,23 @@
+{{- $page := . -}}
+{{- partial "docs/validate-documents.html" $page -}}
+{{- $docId := "" -}}
+{{- with $page.Params.docId -}}
+    {{- $docId = printf "%v" . -}}
+{{- end -}}
+{{- if not $docId -}}
+    {{ errorf "Bookstack: documentation page %q is missing params.docId" $page.RelPermalink }}
+{{- else -}}
+    {{- $matches := where site.Params.documents "id" $docId -}}
+    {{- if eq (len $matches) 0 -}}
+        {{ errorf "Bookstack: documentation page %q uses unknown docId %q" $page.RelPermalink $docId }}
+    {{- else -}}
+        {{- $document := index $matches 0 -}}
+        {{- $documentPage := site.GetPage (strings.TrimSuffix "/" $document.path) -}}
+        {{- if not $documentPage -}}
+            {{ errorf "Bookstack: configured path %q for document %q does not resolve" $document.path $docId }}
+        {{- else -}}
+            {{- $page.Store.Set "bookstackDocument" $document -}}
+            {{- $page.Store.Set "bookstackDocumentPage" $documentPage -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

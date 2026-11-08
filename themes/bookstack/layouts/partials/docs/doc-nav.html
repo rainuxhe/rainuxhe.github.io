@@ -1,0 +1,54 @@
+{{- $current := . -}}
+{{- $docPage := .Store.Get "bookstackDocumentPage" -}}
+{{- with $docPage -}}
+    {{- $pages := .RegularPagesRecursive.ByWeight -}}
+    {{- $currentIndex := -1 -}}
+    {{- range $index, $page := $pages -}}
+        {{- if eq $page.RelPermalink $current.RelPermalink -}}
+            {{- $currentIndex = $index -}}
+        {{- end -}}
+    {{- end -}}
+    {{- $previous := false -}}
+    {{- $next := false -}}
+    {{- if ge $currentIndex 1 -}}
+        {{- $previous = index $pages (sub $currentIndex 1) -}}
+    {{- end -}}
+    {{- if and (ge $currentIndex 0) (lt (add $currentIndex 1) (len $pages)) -}}
+        {{- $next = index $pages (add $currentIndex 1) -}}
+    {{- end -}}
+    {{- if or $previous $next -}}
+        <hr class="doc-hr">
+        <nav id="doc-nav" class="d-print-none" aria-label="文档翻页">
+            <div class="row flex-xl-nowrap{{ if not $next }} flex-row-reverse{{ end }}">
+                {{- with $previous -}}
+                    <div class="col-sm-6 pt-2 doc-next">
+                        <a href="{{ .RelPermalink }}">
+                            <div class="card h-100 my-1">
+                                <div class="card-body py-2">
+                                    <p class="card-title fs-5 fw-semibold lh-base mb-0"><i class="material-icons align-middle" aria-hidden="true">navigate_before</i> {{ .Title }}</p>
+                                    {{ if eq $current.Site.Params.docs.navDesc true }}
+                                        <p class="card-text ms-2">{{ .Description | truncate ($current.Site.Params.docs.navDescTrunc | default 48) }}</p>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{- end -}}
+                {{- with $next -}}
+                    <div class="col-sm-6 pt-2 doc-prev">
+                        <a class="ms-auto" href="{{ .RelPermalink }}">
+                            <div class="card h-100 my-1 text-end">
+                                <div class="card-body py-2">
+                                    <p class="card-title fs-5 fw-semibold lh-base mb-0">{{ .Title }} <i class="material-icons align-middle" aria-hidden="true">navigate_next</i></p>
+                                    {{ if eq $current.Site.Params.docs.navDesc true }}
+                                        <p class="card-text me-2">{{ .Description | truncate ($current.Site.Params.docs.navDescTrunc | default 48) }}</p>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{- end -}}
+            </div>
+        </nav>
+    {{- end -}}
+{{- end -}}

@@ -1,0 +1,23 @@
+{{- $currentDoc := .Store.Get "bookstackDocument" -}}
+{{- $currentDocPage := .Store.Get "bookstackDocumentPage" -}}
+<nav id="sidebar" class="sidebar-wrapper" aria-label="当前文档目录">
+    <div class="sidebar-brand">
+        <a href="{{ relLangURL "" }}" aria-label="Bookstack 首页">
+            {{ with resources.Get "images/logos/logo.svg" }}
+                {{ .Content | safeHTML }}
+            {{ end }}
+        </a>
+    </div>
+    <div class="sidebar-content">
+        {{ with $currentDoc }}
+            <div class="sidebar-doc-context">
+                <span class="sidebar-doc-context-label">当前文档</span>
+                <a class="sidebar-doc-context-title" href="{{ $currentDocPage.RelPermalink }}">
+                    <i class="material-icons" aria-hidden="true">{{ .icon }}</i>
+                    <span>{{ .title }}</span>
+                </a>
+            </div>
+            {{ partial "docs/sidebar-tree.html" (dict "node" $currentDocPage "current" $ "level" 0) }}
+        {{ end }}
+    </div>
+</nav>

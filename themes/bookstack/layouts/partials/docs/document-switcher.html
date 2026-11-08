@@ -1,0 +1,25 @@
+{{- $current := .Store.Get "bookstackDocument" -}}
+{{- with $current -}}
+    <div class="dropdown document-switcher">
+        <button class="btn document-switcher-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="切换文档，当前为 {{ .title }}" title="{{ .title }} — 切换文档">
+            <i class="material-icons document-switcher-icon" aria-hidden="true">{{ .icon }}</i>
+            <span class="document-switcher-label">{{ .title }}</span>
+            <i class="material-icons document-switcher-chevron" aria-hidden="true">keyboard_arrow_down</i>
+        </button>
+        <ul class="dropdown-menu document-switcher-menu">
+            {{- range sort site.Params.documents "weight" -}}
+                {{- $target := site.GetPage (strings.TrimSuffix "/" .path) -}}
+                {{- $active := eq (printf "%v" .id) (printf "%v" $current.id) -}}
+                <li>
+                    <a class="dropdown-item document-switcher-item{{ if $active }} active{{ end }}" href="{{ $target.RelPermalink }}"{{ if $active }} aria-current="true"{{ end }}>
+                        <i class="material-icons" aria-hidden="true">{{ .icon | default "article" }}</i>
+                        <span>
+                            <strong>{{ .title }}</strong>
+                            <small>{{ .description }}</small>
+                        </span>
+                    </a>
+                </li>
+            {{- end -}}
+        </ul>
+    </div>
+{{- end -}}

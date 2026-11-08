@@ -1,0 +1,37 @@
+{{- $documents := site.Params.documents -}}
+{{- if not $documents -}}
+    {{ errorf "Bookstack: site.Params.documents must define at least one document" }}
+{{- else -}}
+    {{- $ids := slice -}}
+    {{- $paths := slice -}}
+    {{- range $documents -}}
+        {{- $id := .id | default "" -}}
+        {{- $path := .path | default "" -}}
+        {{- if not $id -}}
+            {{ errorf "Bookstack: every document requires a non-empty id" }}
+        {{- else if in $ids $id -}}
+            {{ errorf "Bookstack: duplicate document id %q" $id }}
+        {{- else -}}
+            {{- $ids = $ids | append $id -}}
+        {{- end -}}
+        {{- if not $path -}}
+            {{ errorf "Bookstack: document %q requires a non-empty path" $id }}
+        {{- else -}}
+            {{- $normalizedPath := strings.TrimSuffix "/" $path -}}
+            {{- if not (hasPrefix $normalizedPath "/docs/") -}}
+                {{ errorf "Bookstack: document %q path %q must be below /docs/" $id $path }}
+            {{- else if in $paths $normalizedPath -}}
+                {{ errorf "Bookstack: duplicate document path %q" $path }}
+            {{- else -}}
+                {{- $paths = $paths | append $normalizedPath -}}
+            {{- end -}}
+            {{- with site.GetPage $normalizedPath -}}
+                {{- if not .IsSection -}}
+                    {{ errorf "Bookstack: document %q path %q must resolve to a section page" $id $path }}
+                {{- end -}}
+            {{- else -}}
+                {{ errorf "Bookstack: document %q path %q does not resolve to a Hugo page" $id $path }}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

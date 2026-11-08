@@ -1,0 +1,17 @@
+{{ define "main" }}
+    {{ partial "docs/validate-documents.html" . }}
+    <section class="bookstack-catalog section">
+        <div class="container">
+            <div class="bookstack-catalog-heading">
+                <span class="bookstack-eyebrow">文档集合</span>
+                <h1>{{ .Title }}</h1>
+                {{ with .Content }}<div class="bookstack-catalog-intro">{{ . }}</div>{{ end }}
+            </div>
+            <div class="bookstack-doc-grid">
+                {{ range sort site.Params.documents "weight" }}
+                    {{ partial "docs/document-card.html" . }}
+                {{ end }}
+            </div>
+        </div>
+    </section>
+{{ end }}

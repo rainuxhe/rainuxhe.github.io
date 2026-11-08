@@ -1,0 +1,53 @@
+{{ define "main" }}
+    {{ partial "docs/validate-documents.html" . }}
+    <section class="bookstack-home">
+        <div class="container">
+            <div class="bookstack-hero">
+                <div class="bookstack-hero-copy">
+                    <!-- <span class="bookstack-eyebrow">专注技术阅读</span> -->
+                    <h1>专注技术阅读</h1>
+                    <!-- <p>Bookstack 汇集 FastAPI 与 PostgreSQL 的实践笔记。选择一套文档，目录、面包屑与翻页会保持在当前文档内。</p> -->
+                    <a class="bookstack-primary-link" href="{{ "docs/" | relLangURL }}">
+                        浏览全部文档
+                        <i class="material-icons" aria-hidden="true">arrow_forward</i>
+                    </a>
+                </div>
+                <div class="bookstack-hero-mark" aria-hidden="true">
+                    {{ with resources.Get "images/logos/mark.svg" }}
+                        {{ .Content | safeHTML }}
+                    {{ end }}
+                </div>
+            </div>
+
+            <!-- <div class="bookstack-library">
+                <div class="bookstack-section-heading">
+                    <span class="bookstack-eyebrow">文档集合</span>
+                    <h2>选择一套文档</h2>
+                </div>
+                <div class="bookstack-doc-grid">
+                    {{ range sort site.Params.documents "weight" }}
+                        {{ partial "docs/document-card.html" . }}
+                    {{ end }}
+                </div>
+            </div> -->
+
+            <div class="bookstack-principles">
+                <div>
+                    <span>01</span>
+                    <h3>按文档隔离导航</h3>
+                    <p>目录、面包屑和前后页只围绕当前文档运作，不混入其他资料。</p>
+                </div>
+                <div>
+                    <span>02</span>
+                    <h3>全局快速检索</h3>
+                    <p>一次搜索全部文档，结果明确标注来源，减少来回切换。</p>
+                </div>
+                <div>
+                    <span>03</span>
+                    <h3>配置驱动扩展</h3>
+                    <p>新增文档只需增加内容目录和一份清单配置，无需改模板。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{{ end }}

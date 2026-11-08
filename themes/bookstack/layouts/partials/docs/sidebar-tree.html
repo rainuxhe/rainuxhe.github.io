@@ -1,0 +1,24 @@
+{{- $node := .node -}}
+{{- $current := .current -}}
+{{- $level := .level | default 0 -}}
+<ul class="sidebar-tree sidebar-tree-level-{{ $level }}">
+    {{- range $node.Pages.ByWeight -}}
+        {{- $active := or (eq .RelPermalink $current.RelPermalink) (and .IsSection (hasPrefix $current.RelPermalink .RelPermalink)) -}}
+        {{- if .IsSection -}}
+            {{- $submenuId := printf "sidebar-section-%s" (anchorize .RelPermalink) -}}
+            <li class="sidebar-dropdown nested{{ if $active }} current active{{ end }}">
+                <button class="btn sidebar-tree-toggle" type="button" aria-expanded="{{ $active }}" aria-controls="{{ $submenuId }}">
+                    <span>{{ .Title }}</span>
+                    <i class="material-icons sidebar-tree-chevron" aria-hidden="true">chevron_right</i>
+                </button>
+                <div id="{{ $submenuId }}" class="sidebar-submenu{{ if $active }} d-block{{ end }}">
+                    {{- partial "docs/sidebar-tree.html" (dict "node" . "current" $current "level" (add $level 1)) -}}
+                </div>
+            </li>
+        {{- else -}}
+            <li class="sidebar-page{{ if $active }} current{{ end }}">
+                <a class="sidebar-nested-link" href="{{ .RelPermalink }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Title }}</a>
+            </li>
+        {{- end -}}
+    {{- end -}}
+</ul>

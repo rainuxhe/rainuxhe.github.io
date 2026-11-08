@@ -1,0 +1,13 @@
+{{- $entry := . -}}
+{{- $target := site.GetPage (strings.TrimSuffix "/" $entry.path) -}}
+<a class="bookstack-doc-card" href="{{ $target.RelPermalink }}">
+    <span class="bookstack-doc-card-icon" aria-hidden="true">
+        <i class="material-icons">{{ $entry.icon | default "article" }}</i>
+    </span>
+    <span class="bookstack-doc-card-copy">
+        <span class="bookstack-doc-card-title">{{ $entry.title }}</span>
+        <span class="bookstack-doc-card-description">{{ $entry.description }}</span>
+        <span class="bookstack-doc-card-meta">{{ len $target.RegularPagesRecursive }} 篇文档</span>
+    </span>
+    <i class="material-icons bookstack-doc-card-arrow" aria-hidden="true">arrow_forward</i>
+</a>
