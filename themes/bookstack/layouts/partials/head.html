@@ -13,9 +13,10 @@
     <!-- Google Fonts -->
     {{- partial "google-fonts" . }}
     <!-- Custom CSS -->
-    {{- $options := dict "enableSourceMap" true }}
+    {{- $sassSilenced := slice "import" "global-builtin" "color-functions" "slash-div" }}
+    {{- $options := dict "transpiler" "dartsass" "enableSourceMap" true "silenceDeprecations" $sassSilenced }}
     {{- if hugo.IsProduction}}
-        {{- $options := dict "enableSourceMap" false "outputStyle" "compressed" }}
+        {{- $options = dict "transpiler" "dartsass" "enableSourceMap" false "outputStyle" "compressed" "silenceDeprecations" $sassSilenced }}
     {{- end }}
     {{- $style := resources.Get "/scss/style.scss" }}
     {{- $style = $style | resources.ExecuteAsTemplate "/scss/style.scss" . | css.Sass $options }}
@@ -33,29 +34,4 @@
         {{ $js = $js | fingerprint "sha384" }}
     {{ end }}
         <script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end -}} defer></script>
-    <!-- Image Compare Viewer -->
-    {{ if ($.Scratch.Get "image_compare_enabled") }}
-        {{ $imagecompare := resources.Get "js/image-compare-viewer.min.js" }}
-        {{- if not hugo.IsServer }}
-            {{- $js := (slice $imagecompare) | resources.Concat "/js/image-compare.js" | minify | fingerprint "sha384" }}
-            <script type="text/javascript" src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
-        {{- else }}
-            {{- $js := (slice $imagecompare) | resources.Concat "/js/image-compare.js" }}
-            <script type="text/javascript" src="{{ $js.Permalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}"{{ end }}></script>
-        {{- end }}
-    {{- end }}
-    <!-- Plausible Analytics Config -->
-    {{- if not hugo.IsServer }}
-    {{- if or (.Site.Params.plausible.scriptPath) (.Site.Params.plausible.src) -}}
-        {{- partialCached "head/plausible_v3.1.0" . }}
-    {{ else if and (.Site.Params.plausible.scriptURL | default "https://plausible.io") (.Site.Params.plausible.dataDomain) -}}
-        {{- partialCached "head/plausible" . }}
-    {{- end -}}
-    {{- end -}}
-    <!-- Google Analytics v4 Config -->
-    {{- if not hugo.IsServer }}
-    {{- if .Site.Config.Services.GoogleAnalytics.ID }}
-        {{- template "_internal/google_analytics.html" . -}}
-    {{- end -}}
-    {{- end -}}
 </head>

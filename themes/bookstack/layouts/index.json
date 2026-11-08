@@ -1,0 +1,26 @@
+{{- $entries := slice -}}
+{{- range site.RegularPages -}}
+    {{- $page := . -}}
+    {{- with $page.Params.docId -}}
+        {{- $docId := printf "%v" . -}}
+        {{- $docTitle := $docId -}}
+        {{- range site.Params.documents -}}
+            {{- if eq (printf "%v" .id) $docId -}}
+                {{- $docTitle = .title -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $description := $page.Description -}}
+        {{- if not $description -}}
+            {{- $description = $page.Summary | htmlUnescape | plainify -}}
+        {{- end -}}
+        {{- $entries = $entries | append (dict
+            "href" $page.RelPermalink
+            "title" $page.Title
+            "description" $description
+            "content" ($page.Content | htmlUnescape | plainify)
+            "doc" $docTitle
+            "docId" $docId
+        ) -}}
+    {{- end -}}
+{{- end -}}
+{{- $entries | jsonify -}}

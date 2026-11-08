@@ -19,16 +19,8 @@
                 <span class="visually-hidden">打开文档目录</span>
             </button>
             {{- partial "docs/document-switcher.html" . -}}
-            {{ if and (.Site.Params.docsearch.appID) (.Site.Params.docsearch.apiKey) -}}
-            <span><div id="docsearch"></div></span>
-            {{ end }}
             {{ if or (not (isset .Site.Params.flexsearch "enabled")) (eq .Site.Params.flexsearch.enabled true) -}}
-                {{ if and (.Site.Params.docsearch.appID) (.Site.Params.docsearch.apiKey) -}}
-                {{ else }}
-                    <!-- <form class="flexsearch position-relative flex-grow-1 ms-2 me-lg-2 d-none">
-                        <input id="flexsearch" class="form-control is-search" type="search" placeholder="{{ i18n "search_title" }}" aria-label="{{ i18n "search_title" }}" autocomplete="off">
-                        <div id="suggestions" class="shadow bg-white rounded d-none"></div>
-                    </form> -->
+                    <!-- Search button -->
                     <button id="flexsearch-button" class="ms-3 btn btn-soft" data-bs-toggle="collapse" data-bs-target="#FlexSearchCollapse" aria-expanded="false" aria-controls="FlexSearchCollapse" aria-label="{{ i18n "search_title" }}">
                         <span class="material-icons size-20 menu-icon align-middle">search</span>
                         <span class="flexsearch-button-placeholder ms-1 me-2 d-none d-sm-block">{{ i18n "search_title" }}</span>
@@ -43,7 +35,6 @@
                             </span>
                         </div>
                     </button>
-                {{ end }}
             {{ end -}}
         </div>
 
@@ -80,22 +71,10 @@
                 </span>
             </button>
             {{ end -}}
-            {{ if hugo.IsMultilingual }}
-                <div class="dropdown">
-                    <button class="btn btn-link btn-default dropdown-toggle ps-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ site.Language.Lang | upper }}
-                    </button>
-                    <ul class="dropdown-menu text-end">
-                        {{ partial (printf "%s/%s" ($.Scratch.Get "pathName") "i18nlist") . }}
-                    </ul>
-                </div>
-            {{ end }}
         </div>
     </div>
     <!-- FlexSearch Input Start -->
     {{ if or (not (isset .Site.Params.flexsearch "enabled")) (eq .Site.Params.flexsearch.enabled true) -}}
-        {{ if and (.Site.Params.docsearch.appID) (.Site.Params.docsearch.apiKey) -}}
-        {{ else }}
             <div class="collapse" id="FlexSearchCollapse">
                 <div class="flexsearch-container">
                     <div class="flexsearch-keymap">
@@ -124,7 +103,6 @@
                     </form>
                 </div>
             </div>
-        {{ end }}
     {{ end }}
     <!-- FlexSearch Input End -->
 </div>

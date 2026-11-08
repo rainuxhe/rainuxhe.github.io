@@ -2,6 +2,18 @@
 
 Bookstack is a multi-document Hugo site published at <https://gh.heruos.top/>. It currently contains FastAPI and PostgreSQL documentation examples.
 
+## Prerequisites
+
+- Hugo Extended 0.169.0 or newer
+- Go 1.21 or newer for Hugo Modules
+- Dart Sass 1.63.0 or newer, available as `sass` in `PATH`
+
+The theme compiles Bootstrap SCSS with Hugo's `dartsass` transpiler, so installing Hugo Extended alone is not sufficient. Verify Dart Sass with:
+
+```shell
+sass --version
+```
+
 ## Local development
 
 ```shell

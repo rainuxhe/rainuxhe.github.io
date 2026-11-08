@@ -151,6 +151,71 @@ document.addEventListener("click", function (event) {
     }
 });
 
+function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    }
+
+    var textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+        if (!document.execCommand("copy")) {
+            return Promise.reject(new Error("copy failed"));
+        }
+        return Promise.resolve();
+    } catch (error) {
+        return Promise.reject(error);
+    } finally {
+        textarea.remove();
+    }
+}
+
+function getCodeText(code) {
+    var clone = code.cloneNode(true);
+    clone.querySelectorAll("*").forEach(function (node) {
+        if (node.style && node.style.userSelect === "none") {
+            node.remove();
+        }
+    });
+    return clone.textContent;
+}
+
+document.querySelectorAll(".docs-content .main-content div.highlight").forEach(function (block) {
+    var codeNodes = block.querySelectorAll("pre code");
+    if (!codeNodes.length) return;
+    var code = codeNodes[codeNodes.length - 1];
+
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "code-copy-button d-print-none";
+    button.setAttribute("aria-label", "复制代码");
+    button.setAttribute("title", "复制代码");
+    button.innerHTML = '<span class="material-icons" aria-hidden="true">content_copy</span>';
+
+    button.addEventListener("click", function () {
+        copyText(getCodeText(code)).then(function () {
+            button.setAttribute("aria-label", "已复制");
+            button.setAttribute("title", "已复制");
+            button.innerHTML = '<span class="material-icons" aria-hidden="true">check</span>';
+            window.setTimeout(function () {
+                button.setAttribute("aria-label", "复制代码");
+                button.setAttribute("title", "复制代码");
+                button.innerHTML = '<span class="material-icons" aria-hidden="true">content_copy</span>';
+            }, 2000);
+        }).catch(function () {
+            button.setAttribute("aria-label", "复制失败");
+            button.setAttribute("title", "复制失败");
+        });
+    });
+
+    block.appendChild(button);
+});
+
 // Menu sticky
 function windowScroll() {
     var navbar = document.getElementById("topnav");

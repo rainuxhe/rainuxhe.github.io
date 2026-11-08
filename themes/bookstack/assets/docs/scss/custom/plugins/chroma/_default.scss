@@ -11,3 +11,85 @@
         background: var(--code-block-bg);
     }
 }
+
+.docs-content .main-content div.highlight {
+    border-radius: 4px;
+    margin: 16px 0;
+    overflow-x: auto;
+    padding: 1.25rem 3.5rem 1.25rem 1.25rem;
+    position: relative;
+}
+
+.docs-content .main-content div.highlight pre.chroma {
+    margin: 0;
+    overflow-x: auto;
+    padding: 0;
+}
+
+.docs-content .main-content div.highlight > pre {
+    margin: 0;
+    padding: 0;
+}
+
+.docs-content .main-content div.highlight > pre > code {
+    margin: 0;
+    padding: 0;
+}
+
+.docs-content .main-content div.highlight table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    width: auto;
+}
+
+.docs-content .main-content div.highlight table td {
+    border: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.docs-content .main-content div.highlight table td:first-child {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.docs-content .main-content div.highlight table pre,
+.docs-content .main-content div.highlight table code {
+    margin: 0;
+    padding: 0;
+}
+
+.docs-content .main-content div.highlight table pre {
+    overflow: visible;
+}
+
+.docs-content .main-content .code-copy-button {
+    align-items: center;
+    background: color-mix(in srgb, var(--gray-100) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--gray-100) 22%, transparent);
+    border-radius: 0.4rem;
+    color: var(--gray-200);
+    display: inline-flex;
+    height: 36px;
+    justify-content: center;
+    opacity: 0.72;
+    padding: 0;
+    position: absolute;
+    right: 0.6rem;
+    top: 0.6rem;
+    transition: background-color 160ms ease, opacity 160ms ease;
+    width: 36px;
+    z-index: 2;
+}
+
+.docs-content .main-content .code-copy-button:hover,
+.docs-content .main-content .code-copy-button:focus-visible {
+    background: color-mix(in srgb, var(--gray-100) 20%, transparent);
+    color: var(--white);
+    opacity: 1;
+}
+
+.docs-content .main-content .code-copy-button .material-icons {
+    font-size: 20px;
+}

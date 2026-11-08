@@ -4,11 +4,6 @@
 
 {{ $slice := slice $dayjs $relativeTime $app -}}
 
-{{ if and (.Site.Params.docsearch.appID) (.Site.Params.docsearch.apiKey) -}}
-    {{ $docsearch := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "js/docsearch.min.js") }}
-    {{ $slice = $slice | append $docsearch -}}
-{{ end }}
-
 {{ if site.Params.docs.toc | default true }}
     {{ if eq .Site.Params.docs.scrollSpy true -}}
         {{ $simplescrollspy := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "js/simple-scrollspy.min.js") }}
@@ -27,18 +22,9 @@
     {{ $slice = $slice | append $tocmobilescrollspy -}}
 {{ end -}}
 
-{{ if eq .Site.Params.docs.prism true -}}
-    {{ $prism := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "js/prism.js") }}
-    {{- $opts := dict
-        "params" (dict "langPath" (urls.JoinPath .Site.BaseURL "docs/js/components/"))
-    -}}
-    {{ $prism := $prism | js.Build $opts -}}
-    {{ $slice = $slice | append $prism -}}
-    {{- range slice "bash" "sql" "python" -}}
-        {{- with resources.Get (printf "/docs/js/components/prism-%s.min.js" .) -}}
-            {{- $slice = $slice | append . -}}
-        {{- end -}}
-    {{- end -}}
+{{ if or (not (isset .Site.Params.flexsearch "enabled")) (eq .Site.Params.flexsearch.enabled true) -}}
+    {{ $flexSearch := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "js/flexsearch.bundle.js") }}
+    {{ $slice = $slice | append $flexSearch -}}
 {{ end -}}
 
 <!-- Bootstrap JS -->

@@ -1,9 +1,5 @@
 {{ define "main" }}
-    <!-- override Prism's default copy messages to 'empty'. Required by CSS styling.
-         see: https://prismjs.com/plugins/copy-to-clipboard/#styling -->
-    <div data-prismjs-copy="" data-prismjs-copy-success="" data-prismjs-copy-error="">
-        {{ .Content }}
-    </div>
+    {{ .Content }}
 
     {{ if and .GitInfo .Site.Params.docs.repoURL -}}
         {{ partial (printf "%s/%s" ($.Scratch.Get "pathName") "gitinfo") . }}
@@ -25,15 +21,5 @@
         mermaid.initialize(config);
     </script>
     {{ end }}
-
-    {{ if .Site.Params.feedback.enabled | default false -}}
-        {{ if or (.Site.Params.plausible.scriptPath) (.Site.Params.plausible.src) (.Site.Config.Services.GoogleAnalytics.ID) }}
-            {{- partial (printf "%s/%s" ($.Scratch.Get "pathName") "footer/feedback.html") . -}}
-        {{ else if and (.Site.Params.plausible.scriptURL | default "https://plausible.io") (.Site.Params.plausible.dataDomain) -}}
-            {{- partial (printf "%s/%s" ($.Scratch.Get "pathName") "footer/feedback.html") . -}}
-        {{ else }}
-            {{ errorf "Either Google Analytics or Plausible Analytics must be configured before enabling the Feedback Widget." }}
-        {{ end }}
-    {{ end -}}
 
 {{ end }}

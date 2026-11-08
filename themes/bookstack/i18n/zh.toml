@@ -1,6 +1,3 @@
-[lang_select_title]
-    other = "选择语言"
-
 [search_title]
     other = "搜索"
 
@@ -15,9 +12,6 @@
 
 [search_cancel]
     other = "取消"
-
-[search_no_results]
-    other = "没有找到"
 
 [enable_light_mode]
     other = "切换到亮色模式"

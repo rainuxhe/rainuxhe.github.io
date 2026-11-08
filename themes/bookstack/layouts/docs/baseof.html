@@ -4,12 +4,13 @@
 {{ $.Scratch.Set "pathName" (printf "%s" (.Site.Params.docs.pathName | default "docs")) }}
 <!-- social_list -->
 {{ $social_params := slice "github" "twitter" "bluesky" "instagram" "rss" }}
+{{ $social := site.Params.social | default dict }}
 {{ range $social_params }}
-    {{ if isset site.Params.social . }}
+    {{ if isset $social . }}
         {{ $.Scratch.Add "social_list" (slice .) }}
     {{ end }}
 {{ end }}
-<html lang="{{ site.LanguageCode }}">
+<html lang="{{ site.Language.Locale }}">
     {{- partial (printf "%s/%s" ($.Scratch.Get "pathName") "head.html") . -}}
     <body>
         <div class="content">
@@ -28,19 +29,19 @@
                                     </div>
                                     <div class="row flex-xl-nowrap">
                                         {{ if site.Params.docs.toc | default true }}
-                                        <div class="docs-toc col-xl-3 {{ if .IsNode }}visually-hidden{{ else }}{{end}} {{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}{{ else }}visually-hidden{{ end }} {{ if site.Params.docs.toc | default true }}{{ else }}visually-hidden{{ end }} d-xl-block">
+                                        <div class="docs-toc col-xl-3 {{ if not .IsPage }}visually-hidden{{ end }} {{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}{{ else }}visually-hidden{{ end }} {{ if site.Params.docs.toc | default true }}{{ else }}visually-hidden{{ end }} d-xl-block">
                                             {{- partial (printf "%s/%s" ($.Scratch.Get "pathName") "toc.html") . -}}
                                         </div>
                                         {{ end }}
                                         {{ if site.Params.docs.tocMobile | default true }}
-                                        <div class="docs-toc-mobile {{ if .IsNode }}visually-hidden{{ else }}{{end}} {{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}{{ else }}visually-hidden{{ end }} {{ if site.Params.docs.tocMobile | default true }}{{ else }}visually-hidden{{ end }} d-print-none d-xl-none">
+                                        <div class="docs-toc-mobile {{ if not .IsPage }}visually-hidden{{ end }} {{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}{{ else }}visually-hidden{{ end }} {{ if site.Params.docs.tocMobile | default true }}{{ else }}visually-hidden{{ end }} d-print-none d-xl-none">
                                             <button id="toc-dropdown-btn" class="btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="false">
                                                 {{ i18n "toc_title" | default "本页目录" }}
                                             </button>
                                             {{- partial (printf "%s/%s" ($.Scratch.Get "pathName") "toc-mobile.html") . -}}
                                         </div>
                                         {{ end -}}
-                                        <div class="docs-content col-12 {{ if .IsNode }}{{ else }}{{ if site.Params.docs.toc | default true }}{{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}col-xl-9{{else}}{{end}}{{ else }}{{ end }}{{ end }} mt-0">
+                                        <div class="docs-content col-12 {{ if .IsPage }}{{ if site.Params.docs.toc | default true }}{{ if and (ne .Params.toc false) (ne .TableOfContents "<nav id=\"TableOfContents\"></nav>") }}col-xl-9{{ else }}{{ end }}{{ else }}{{ end }}{{ end }} mt-0">
                                             <div class="mb-0 d-flex">
                                                 {{ if site.Params.docs.titleIcon | default false }}
                                                 <i class="material-icons title-icon me-2">{{- .Params.icon | default "article" }}</i>
@@ -85,17 +86,9 @@
 
         {{- partialCached (printf "%s/%s" ($.Scratch.Get "pathName") "footer/footer-scripts.html") . -}}
 
-        <!-- DocSearch Config -->
-        {{ if and (.Site.Params.docsearch.appID) (.Site.Params.docsearch.apiKey) -}}
-            {{- partialCached (printf "%s/%s" ($.Scratch.Get "pathName") "footer/docsearch.html") . -}}
-        {{ end }}
-
         <!-- FlexSearch Config -->
         {{ if or (not (isset .Site.Params.flexsearch "enabled")) (eq .Site.Params.flexsearch.enabled true) -}}
-            {{ if and (.Site.Params.docsearch.appID) (.Site.Params.docsearch.apiKey) -}}
-            {{ else }}
-                {{- partialCached (printf "%s/%s" ($.Scratch.Get "pathName") "footer/flexsearch.html") . -}}
-            {{ end }}
+            {{- partialCached (printf "%s/%s" ($.Scratch.Get "pathName") "footer/flexsearch.html") . -}}
         {{ end }}
     </body>
 </html>

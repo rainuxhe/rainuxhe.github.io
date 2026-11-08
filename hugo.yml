@@ -1,5 +1,5 @@
 baseURL: "https://gh.heruos.top/"
-languageCode: "zh-cn"
+locale: "zh-CN"
 defaultContentLanguage: "zh"
 title: "Bookstack"
 theme: ["bookstack"]
@@ -11,13 +11,13 @@ enableEmoji: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
-pygmentsUseClasses: true
+pygmentsUseClasses: false
 mainSections: ["docs"]
 
 module:
   hugoVersion:
     extended: true
-    min: "0.140.0"
+    min: "0.169.0"
   imports:
     - path: "github.com/gohugoio/hugo-mod-bootstrap-scss/v5"
 
@@ -26,6 +26,10 @@ markup:
   tableOfContents:
     startLevel: 1
     endLevel: 3
+  highlight:
+    noClasses: true
+    lineNos: false
+    # lineNumbersInTable: false
   goldmark:
     renderer:
       unsafe: true
@@ -34,7 +38,7 @@ markup:
         block: true
 
 outputs:
-  home: ["HTML"]
+  home: ["HTML", "JSON"]
   page: ["HTML"]
   section: ["HTML"]
   taxonomy: ["HTML"]
@@ -61,15 +65,11 @@ params:
     title: "Bookstack"
     pathName: "docs"
     darkMode: true
-    prism: true
-    prismTheme: "lotusdocs"
     repoURL: "https://github.com/rainuxhe/rainuxhe.github.io"
     repoBranch: "main"
     editPage: true
     lastMod: true
     lastModRelative: true
-    useLastmodTime: false
-    sidebarIcons: false
     breadcrumbs: true
     backToTop: true
     toc: true
@@ -96,11 +96,11 @@ params:
       description: "PostgreSQL 日常操作、事务、索引与运维实践。"
       icon: "database"
       weight: 20
-    - id: "markdown-test"
-      title: "Markdown 测试"
-      path: "/docs/markdown-test/"
-      description: "用于检查多级目录、Markdown 语法和内容样式的测试文档。"
-      icon: "science"
+    - id: "bookstack"
+      title: "BookStack"
+      path: "/docs/bookstack/"
+      description: "BookStack 的安装、配置、Markdown 语法和扩展功能说明。"
+      icon: "menu_book"
       weight: 30
 
   flexsearch:
@@ -116,3 +116,7 @@ menu:
       url: "/docs/"
       identifier: "docs"
       weight: 10
+    - name: "关于"
+      url: "/posts/about/"
+      identifier: "about"
+      weight: 20

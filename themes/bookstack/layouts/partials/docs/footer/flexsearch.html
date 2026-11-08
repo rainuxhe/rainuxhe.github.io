@@ -1,220 +1,172 @@
 <script type="module">
-    var suggestions = document.getElementById('suggestions');
-    var search = document.getElementById('flexsearch');
+window.addEventListener("load", function () {
+    const suggestions = document.getElementById("suggestions");
+    const search = document.getElementById("flexsearch");
+    const flexsearchContainer = document.getElementById("FlexSearchCollapse");
+    const hideFlexsearchBtn = document.getElementById("hideFlexsearch");
+    const maxResult = {{ .Site.Params.flexsearch.maxResult | default 5 }};
+    const minlength = {{ .Site.Params.flexsearch.minQueryChar | default 0 }};
+    let searchIndexPromise;
+    let searchSequence = 0;
 
-    const flexsearchContainer = document.getElementById('FlexSearchCollapse');
-
-    const hideFlexsearchBtn = document.getElementById('hideFlexsearch');
-
-    const configObject = { toggle: false }
-    const flexsearchContainerCollapse = new Collapse(flexsearchContainer, configObject) // initialized with no keyboard
-
-    if (search !== null) {
-        document.addEventListener('keydown', inputFocus);
-        flexsearchContainer.addEventListener('shown.bs.collapse', function () {
-            search.focus();
-        });
-        // hide search collapse containder by clicking outside (except top header)
-        var topHeader = document.getElementById("top-header");
-        document.addEventListener('click', function(elem) {
-            if (!flexsearchContainer.contains(elem.target) && !topHeader.contains(elem.target))
-                flexsearchContainerCollapse.hide();
-        });
+    if (!suggestions || !search || !flexsearchContainer || !hideFlexsearchBtn) {
+        return;
     }
 
-    hideFlexsearchBtn.addEventListener('click', () =>{
-        flexsearchContainerCollapse.hide()
-    })
+    const flexsearchContainerCollapse = new Collapse(flexsearchContainer, { toggle: false });
 
-    function inputFocus(e) {
-        if (e.ctrlKey && e.key === '/') {
-            e.preventDefault();
+    function getSearchIndex() {
+        if (!searchIndexPromise) {
+            searchIndexPromise = fetch({{ "index.json" | relURL | jsonify | safeJS }})
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error("Unable to load search index");
+                    }
+                    return response.json();
+                })
+                .then(function (documents) {
+                    const searchIndex = new FlexSearch.Document({
+                        tokenize: {{ .Site.Params.flexsearch.tokenize | default "forward" | jsonify | safeJS }},
+                        minlength: minlength,
+                        cache: {{ .Site.Params.flexsearch.cache | default 100 }},
+                        optimize: {{ .Site.Params.flexsearch.optimize | default true }},
+                        document: {
+                            id: "id",
+                            store: ["href", "title", "description", "doc", "docId"],
+                            index: ["title", "description", "content"]
+                        }
+                    });
+
+                    documents.forEach(function (document, documentIndex) {
+                        searchIndex.add(Object.assign({ id: documentIndex }, document));
+                    });
+
+                    return searchIndex;
+                });
+        }
+
+        return searchIndexPromise;
+    }
+
+    function inputFocus(event) {
+        if (event.ctrlKey && event.key === "/") {
+            event.preventDefault();
             flexsearchContainerCollapse.toggle();
         }
-        if (e.key === 'Escape' ) {
+        if (event.key === "Escape") {
             search.blur();
-            // suggestions.classList.add('d-none');
+            suggestions.classList.add("d-none");
             flexsearchContainerCollapse.hide();
         }
-    };
-
-    document.addEventListener('click', function(event) {
-
-    var isClickInsideElement = suggestions.contains(event.target);
-
-    if (!isClickInsideElement) {
-        suggestions.classList.add('d-none');
     }
 
+    document.addEventListener("keydown", inputFocus);
+    flexsearchContainer.addEventListener("shown.bs.collapse", function () {
+        search.focus();
+    });
+    document.addEventListener("click", function (event) {
+        if (!flexsearchContainer.contains(event.target) && !document.getElementById("top-header").contains(event.target)) {
+            flexsearchContainerCollapse.hide();
+        }
+        if (!suggestions.contains(event.target)) {
+            suggestions.classList.add("d-none");
+        }
+    });
+    hideFlexsearchBtn.addEventListener("click", function () {
+        flexsearchContainerCollapse.hide();
     });
 
-    /*
-    Source:
-    - https://dev.to/shubhamprakash/trap-focus-using-javascript-6a3
-    */
+    document.addEventListener("keydown", function (event) {
+        if (suggestions.classList.contains("d-none")) return;
 
-    document.addEventListener('keydown',suggestionFocus);
+        const focusableSuggestions = Array.from(suggestions.querySelectorAll("a"));
+        if (!focusableSuggestions.length) return;
 
-    function suggestionFocus(e) {
-    const suggestionsHidden = suggestions.classList.contains('d-none');
-    if (suggestionsHidden) return;
-
-    const focusableSuggestions= [...suggestions.querySelectorAll('a')];
-    if (focusableSuggestions.length === 0) return;
-
-    const index = focusableSuggestions.indexOf(document.activeElement);
-
-    if (e.key === "ArrowUp") {
-        e.preventDefault();
-        const nextIndex = index > 0 ? index - 1 : 0;
-        focusableSuggestions[nextIndex].focus();
-    }
-    else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        const nextIndex= index + 1 < focusableSuggestions.length ? index + 1 : index;
-        focusableSuggestions[nextIndex].focus();
-    }
-
-    }
-
-    /*
-    Source:
-    - https://github.com/nextapps-de/flexsearch#index-documents-field-search
-    - https://raw.githack.com/nextapps-de/flexsearch/master/demo/autocomplete.html
-    */
-
-    (function(){
-
-    var index = new FlexSearch.Document({
-        // charset: "latin:default",
-        tokenize: {{ .Site.Params.flexsearch.tokenize | default "forward" }},
-        minlength: {{ .Site.Params.flexsearch.minQueryChar | default 0}},
-        cache: {{ .Site.Params.flexsearch.cache | default 100 }},
-        optimize: {{ .Site.Params.flexsearch.optimize | default true }},
-        document: {
-        id: 'id',
-        store: [
-            "href", "title", "description", "doc", "docId"
-        ],
-        index: ["title", "description", "content"]
+        const index = focusableSuggestions.indexOf(document.activeElement);
+        if (event.key === "ArrowUp") {
+            event.preventDefault();
+            focusableSuggestions[Math.max(index - 1, 0)].focus();
+        }
+        if (event.key === "ArrowDown") {
+            event.preventDefault();
+            focusableSuggestions[Math.min(index + 1, focusableSuggestions.length - 1)].focus();
         }
     });
 
+    async function showResults() {
+        const sequence = ++searchSequence;
+        const searchQuery = search.value.trim();
+        suggestions.replaceChildren();
 
-    // Not yet supported: https://github.com/nextapps-de/flexsearch#complex-documents
-
-
-    // var docs = [
-    //     {{ range $index, $page := (where .Site.Pages "Section" "docs") -}}
-    //     {
-    //         id: {{ $index }},
-    //         href: {{ .Permalink }},
-    //         title: {{ .Title }},
-    //         description: {{ .Params.description }},
-    //         content: {{ .Content }}
-    //     },
-    //     {{ end -}}
-    // ];
-
-
-    // https://discourse.gohugo.io/t/range-length-or-last-element/3803/2
-
-    {{ $list := slice }}
-    {{- range site.RegularPages -}}
-        {{- if .Params.docId -}}
-            {{- $list = $list | append . -}}
-        {{- end -}}
-    {{- end -}}
-
-    {{ range $index, $element := $list -}}
-        {{- $docId := printf "%v" .Params.docId -}}
-        {{- $docTitle := $docId -}}
-        {{- range site.Params.documents -}}
-            {{- if eq (printf "%v" .id) $docId -}}
-                {{- $docTitle = .title -}}
-            {{- end -}}
-        {{- end -}}
-        index.add(
-            {
-                id: {{ $index }},
-                href: {{ .RelPermalink | jsonify | safeJS }},
-                title: {{ .Title | jsonify | safeJS }},
-                {{ with .Description -}}
-                    description: {{ . | jsonify | safeJS }},
-                {{ else -}}
-                description: {{ .Summary | htmlUnescape | plainify | jsonify | safeJS }},
-                {{ end -}}
-                content: {{ .Content | htmlUnescape | plainify | jsonify | safeJS }},
-                doc: {{ $docTitle | jsonify | safeJS }},
-                docId: {{ $docId | jsonify | safeJS }}
-            }
-        );
-    {{ end -}}
-
-    search.addEventListener('input', show_results, true);
-
-    function show_results(){
-        const maxResult = {{ .Site.Params.flexsearch.maxResult | default 5}};
-        const minlength = {{ .Site.Params.flexsearch.minQueryChar | default 0}};
-        var searchQuery = this.value.trim();
-        var results = index.search(searchQuery, {limit: maxResult, enrich: true});
-
-        // flatten results since index.search() returns results for each indexed field
-        const flatResults = new Map(); // keyed by href to dedupe results
-        for (const result of results.flatMap(r => r.result)) {
-        if (flatResults.has(result.doc.href)) continue;
-        flatResults.set(result.doc.href, result.doc);
+        if (!searchQuery) {
+            suggestions.classList.add("d-none");
+            return;
         }
 
-        suggestions.innerHTML = "";
-        suggestions.classList.remove('d-none');
+        suggestions.classList.remove("d-none");
 
-        // inform user of search query minimum character requirement
         if (searchQuery.length < minlength) {
-            const minCharMessage = document.createElement('div')
-            minCharMessage.innerHTML = `请至少输入 <strong>${minlength}</strong> 个字符`
+            const minCharMessage = document.createElement("div");
+            minCharMessage.textContent = `请至少输入 ${minlength} 个字符`;
             minCharMessage.classList.add("suggestion__no-results");
             suggestions.appendChild(minCharMessage);
             return;
-        } else {
-            // inform user that no results were found
-            if (flatResults.size === 0 && searchQuery) {
-                const noResultsMessage = document.createElement('div')
-                noResultsMessage.textContent = `没有找到 "${searchQuery}"`
-                noResultsMessage.classList.add("suggestion__no-results");
-                suggestions.appendChild(noResultsMessage);
-                return;
+        }
+
+        let index;
+        try {
+            index = await getSearchIndex();
+        } catch (error) {
+            if (sequence !== searchSequence) return;
+            const errorMessage = document.createElement("div");
+            errorMessage.textContent = "搜索索引加载失败，请刷新页面重试。";
+            errorMessage.classList.add("suggestion__no-results");
+            suggestions.appendChild(errorMessage);
+            return;
+        }
+
+        if (sequence !== searchSequence) return;
+
+        const results = index.search(searchQuery, { limit: maxResult, enrich: true });
+        const flatResults = new Map();
+
+        for (const result of results.flatMap(function (item) { return item.result; })) {
+            if (!flatResults.has(result.doc.href)) {
+                flatResults.set(result.doc.href, result.doc);
             }
         }
 
-        // construct a list of suggestions
-        for(const [href, doc] of flatResults) {
-            const entry = document.createElement('div');
-            suggestions.appendChild(entry);
+        if (flatResults.size === 0) {
+            const noResultsMessage = document.createElement("div");
+            noResultsMessage.textContent = `没有找到 "${searchQuery}"`;
+            noResultsMessage.classList.add("suggestion__no-results");
+            suggestions.appendChild(noResultsMessage);
+            return;
+        }
 
-            const a = document.createElement('a');
-            a.href = href;
-            entry.appendChild(a);
+        for (const [href, resultDoc] of flatResults) {
+            const entry = document.createElement("div");
+            const link = document.createElement("a");
+            const badge = document.createElement("span");
+            const title = document.createElement("span");
+            const description = document.createElement("span");
 
-            const badge = document.createElement('span');
-            badge.textContent = doc.doc;
+            link.href = href;
+            badge.textContent = resultDoc.doc;
             badge.classList.add("suggestion__doc");
-            a.appendChild(badge);
-
-            const title = document.createElement('span');
-            title.textContent = doc.title;
+            title.textContent = resultDoc.title;
             title.classList.add("suggestion__title");
-            a.appendChild(title);
-
-            const description = document.createElement('span');
-            description.textContent = doc.description;
+            description.textContent = resultDoc.description;
             description.classList.add("suggestion__description");
-            a.appendChild(description);
 
+            link.append(badge, title, description);
+            entry.appendChild(link);
             suggestions.appendChild(entry);
 
-            if(suggestions.childElementCount == maxResult) break;
+            if (suggestions.childElementCount === maxResult) break;
         }
     }
-    }());
+
+    search.addEventListener("input", showResults);
+});
 </script>
