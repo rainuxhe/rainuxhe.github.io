@@ -189,6 +189,7 @@ document.querySelectorAll(".docs-content .main-content div.highlight").forEach(f
     var codeNodes = block.querySelectorAll("pre code");
     if (!codeNodes.length) return;
     var code = codeNodes[codeNodes.length - 1];
+    var buttonHost = block.closest(".code-block") || block;
 
     var button = document.createElement("button");
     button.type = "button";
@@ -213,7 +214,7 @@ document.querySelectorAll(".docs-content .main-content div.highlight").forEach(f
         });
     });
 
-    block.appendChild(button);
+    buttonHost.appendChild(button);
 });
 
 // Menu sticky

@@ -1,2 +1,19 @@
 {{- $result := transform.HighlightCodeBlock . -}}
-{{- $result.Wrapped -}}
+{{- $lineCount := len (split (strings.TrimSpace .Inner) "\n") -}}
+{{- $language := .Type | default "text" -}}
+<div class="code-block" data-code-block data-code-lines="{{ $lineCount }}" data-code-language="{{ $language }}">
+    <details class="code-block-details"{{ if le $lineCount 20 }} open{{ end }}>
+        <summary class="code-block-summary">
+            <span class="code-block-language">{{ $language }}</span>
+            <span class="code-block-summary-meta">
+                <span class="code-block-line-count">{{ $lineCount }} 行</span>
+                <span class="code-block-toggle-label">
+                    <span class="code-block-toggle-collapsed">展开</span>
+                    <span class="code-block-toggle-expanded">收起</span>
+                </span>
+                <span class="material-icons code-block-toggle-icon" aria-hidden="true">expand_more</span>
+            </span>
+        </summary>
+        {{- $result.Wrapped }}
+    </details>
+</div>

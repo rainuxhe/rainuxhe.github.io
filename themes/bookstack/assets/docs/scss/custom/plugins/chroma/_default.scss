@@ -12,12 +12,106 @@
     }
 }
 
+.docs-content .main-content .code-block {
+    background: var(--code-block-bg);
+    border: 1px solid color-mix(in srgb, var(--white) 10%, transparent);
+    border-radius: 0.55rem;
+    margin: 1rem 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.docs-content .main-content .code-block-details {
+    margin: 0;
+}
+
+.docs-content .main-content .code-block-summary {
+    align-items: center;
+    background: color-mix(in srgb, var(--white) 3%, transparent);
+    color: color-mix(in srgb, var(--white) 78%, transparent);
+    cursor: pointer;
+    display: flex;
+    font-size: 0.75rem;
+    gap: 1rem;
+    justify-content: space-between;
+    line-height: 1.4;
+    list-style: none;
+    min-height: 44px;
+    padding: 0.6rem 3.6rem 0.6rem 1rem;
+    user-select: none;
+}
+
+.docs-content .main-content .code-block-summary::-webkit-details-marker {
+    display: none;
+}
+
+.docs-content .main-content .code-block-summary:hover {
+    background: color-mix(in srgb, var(--white) 7%, transparent);
+}
+
+.docs-content .main-content .code-block-summary:focus-visible {
+    outline: 2px solid var(--primary-200);
+    outline-offset: -2px;
+}
+
+.docs-content .main-content .code-block-details[open] > .code-block-summary {
+    border-bottom: 1px solid color-mix(in srgb, var(--white) 9%, transparent);
+}
+
+.docs-content .main-content .code-block-language {
+    color: var(--primary-200);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.docs-content .main-content .code-block-summary-meta {
+    align-items: center;
+    color: color-mix(in srgb, var(--white) 62%, transparent);
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.55rem;
+    white-space: nowrap;
+}
+
+.docs-content .main-content .code-block-toggle-expanded {
+    display: none;
+}
+
+.docs-content .main-content .code-block-details[open] .code-block-toggle-expanded {
+    display: inline;
+}
+
+.docs-content .main-content .code-block-details[open] .code-block-toggle-collapsed {
+    display: none;
+}
+
+.docs-content .main-content .code-block-toggle-icon {
+    font-size: 18px;
+    transition: transform 160ms ease;
+}
+
+.docs-content .main-content .code-block-details[open] .code-block-toggle-icon {
+    transform: rotate(180deg);
+}
+
 .docs-content .main-content div.highlight {
     border-radius: 4px;
     margin: 16px 0;
     overflow-x: auto;
     padding: 1.25rem 3.5rem 1.25rem 1.25rem;
     position: relative;
+}
+
+.docs-content .main-content .code-block > .code-block-details > div.highlight {
+    border-radius: 0;
+    margin: 0;
+    padding: 1rem 1.25rem 1.25rem;
 }
 
 .docs-content .main-content div.highlight pre.chroma {
@@ -83,6 +177,10 @@
     z-index: 2;
 }
 
+.docs-content .main-content .code-block > .code-copy-button {
+    top: 4px;
+}
+
 .docs-content .main-content .code-copy-button:hover,
 .docs-content .main-content .code-copy-button:focus-visible {
     background: color-mix(in srgb, var(--gray-100) 20%, transparent);
@@ -92,4 +190,32 @@
 
 .docs-content .main-content .code-copy-button .material-icons {
     font-size: 20px;
+}
+
+@media (max-width: 767.98px) {
+    .docs-content .main-content .code-block-summary {
+        gap: 0.75rem;
+        padding-left: 0.85rem;
+        padding-right: 3.2rem;
+    }
+
+    .docs-content .main-content .code-block > .code-block-details > div.highlight {
+        padding: 0.9rem 1rem 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .docs-content .main-content .code-block-toggle-icon {
+        transition: none;
+    }
+}
+
+@media print {
+    .docs-content .main-content .code-block-summary {
+        display: none;
+    }
+
+    .docs-content .main-content .code-block > .code-block-details > div.highlight {
+        display: block !important;
+    }
 }
