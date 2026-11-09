@@ -1,6 +1,13 @@
 <head>
     <meta charset="utf-8" />
-    <title>{{- if .IsHome }}{{ .Site.Title }}{{ else if eq .Kind "404" }}页面不存在 | {{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    {{- $pageTitle := .Title -}}
+    {{- if eq .Kind "term" -}}
+        {{- $pageTitle = .Data.Term | default .Title -}}
+    {{- else if eq .Kind "taxonomy" -}}
+        {{- $config := partial "docs/taxonomy-config.html" (dict "plural" .Data.Plural) -}}
+        {{- $pageTitle = index $config "title" -}}
+    {{- end -}}
+    <title>{{- if .IsHome }}{{ .Site.Title }}{{ else if eq .Kind "404" }}页面不存在 | {{ .Site.Title }}{{ else }}{{ $pageTitle }} | {{ .Site.Title }}{{ end }}</title>
     {{- if not hugo.IsProduction }}
     <meta name="robots" content="noindex">
     {{- end }}

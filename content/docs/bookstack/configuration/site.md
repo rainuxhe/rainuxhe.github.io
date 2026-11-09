@@ -92,6 +92,43 @@ outputs:
 
 首页同时生成 `/index.json`，供 FlexSearch 按需加载搜索索引。
 
+## 分类与标签
+
+分类和标签使用 Hugo taxonomy，并通过 `permalinks` 控制聚合页与 term 页地址：
+
+```yaml
+taxonomies:
+  category: categories
+  tag: tags
+
+permalinks:
+  taxonomy:
+    categories: /categories/
+    tags: /tags/
+  term:
+    categories: /categories/:slug/
+    tags: /tags/:slug/
+```
+
+聚合页的标题、图标和说明可以独立配置：
+
+```yaml
+params:
+  taxonomies:
+    categories:
+      title: "分类"
+      eyebrow: "Categories"
+      description: "按分类浏览站点中的全部文档。"
+      icon: "category"
+    tags:
+      title: "标签"
+      eyebrow: "Tags"
+      description: "按主题标签浏览站点中的全部文档。"
+      icon: "sell"
+```
+
+修改聚合页地址时，需要同时调整 `permalinks.taxonomy` 和 `permalinks.term` 中的路径。
+
 ## 文档主题参数
 
 ```yaml

@@ -1,0 +1,23 @@
+{{- $docTitle := .Params.docId | default "文档" -}}
+{{- with .Params.docId -}}
+    {{- with index (where site.Params.documents "id" .) 0 -}}
+        {{- $docTitle = .title -}}
+    {{- end -}}
+{{- end -}}
+<a class="bookstack-doc-card" href="{{ .RelPermalink }}">
+    <span class="bookstack-doc-card-icon" aria-hidden="true">
+        <i class="material-icons">{{ .Params.icon | default "article" }}</i>
+    </span>
+    <span class="bookstack-doc-card-copy">
+        <span class="bookstack-doc-card-title">{{ .LinkTitle }}</span>
+        <span class="bookstack-doc-card-description">
+            {{- with .Description -}}
+                {{ . }}
+            {{- else -}}
+                {{ .Summary | plainify | truncate 140 }}
+            {{- end -}}
+        </span>
+        <span class="bookstack-doc-card-meta">{{ $docTitle }}</span>
+    </span>
+    <i class="material-icons bookstack-doc-card-arrow" aria-hidden="true">arrow_forward</i>
+</a>

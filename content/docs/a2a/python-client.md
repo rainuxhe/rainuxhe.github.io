@@ -4,6 +4,11 @@ description: "发现 Agent Card，发送消息，处理 Artifact、SSE 事件和
 icon: "send"
 weight: 40
 toc: true
+tags:
+  - "python"
+  - "a2a"
+categories: 
+  - "program"
 ---
 
 ## 发现并调用 Agent

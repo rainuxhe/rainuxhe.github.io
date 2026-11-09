@@ -1,0 +1,36 @@
+{{- $categories := .GetTerms "categories" -}}
+{{- $tags := .GetTerms "tags" -}}
+{{- if or $categories $tags }}
+<nav class="docs-taxonomy" aria-label="分类与标签">
+    {{- with $categories }}
+        {{- $config := partial "docs/taxonomy-config.html" (dict "plural" "categories") }}
+        {{- $taxonomyPage := (index . 0).Parent }}
+        <div class="docs-taxonomy-group">
+            <a class="docs-taxonomy-label" href="{{ $taxonomyPage.RelPermalink }}">
+                <span class="material-icons" aria-hidden="true">{{ index $config "icon" }}</span>
+                <span>{{ index $config "title" }}</span>
+            </a>
+            <ul class="docs-taxonomy-list">
+                {{- range . }}
+                    <li><a class="docs-taxonomy-chip" href="{{ .RelPermalink }}">{{ .Data.Term | default .LinkTitle }}</a></li>
+                {{- end }}
+            </ul>
+        </div>
+    {{- end }}
+    {{- with $tags }}
+        {{- $config := partial "docs/taxonomy-config.html" (dict "plural" "tags") }}
+        {{- $taxonomyPage := (index . 0).Parent }}
+        <div class="docs-taxonomy-group">
+            <a class="docs-taxonomy-label" href="{{ $taxonomyPage.RelPermalink }}">
+                <span class="material-icons" aria-hidden="true">{{ index $config "icon" }}</span>
+                <span>{{ index $config "title" }}</span>
+            </a>
+            <ul class="docs-taxonomy-list">
+                {{- range . }}
+                    <li><a class="docs-taxonomy-chip" href="{{ .RelPermalink }}">{{ .Data.Term | default .LinkTitle }}</a></li>
+                {{- end }}
+            </ul>
+        </div>
+    {{- end }}
+</nav>
+{{- end }}

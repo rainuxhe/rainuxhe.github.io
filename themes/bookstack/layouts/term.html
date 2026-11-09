@@ -1,0 +1,33 @@
+{{ define "main" }}
+    {{- $config := partial "docs/taxonomy-config.html" (dict "plural" .Data.Plural) -}}
+    <section class="bookstack-catalog section taxonomy-term">
+        <div class="container">
+            <article class="bookstack-page">
+                <nav class="bookstack-taxonomy-breadcrumb" aria-label="面包屑">
+                    <a href="{{ site.Home.RelPermalink }}">首页</a>
+                    <span class="material-icons" aria-hidden="true">chevron_right</span>
+                    {{ with .Parent }}
+                        <a href="{{ .RelPermalink }}">{{ index $config "title" }}</a>
+                    {{ else }}
+                        <span>{{ index $config "title" }}</span>
+                    {{ end }}
+                    <span class="material-icons" aria-hidden="true">chevron_right</span>
+                    <span aria-current="page">{{ .Data.Term | default .Title }}</span>
+                </nav>
+                <header class="bookstack-catalog-heading">
+                    <span class="bookstack-eyebrow">{{ index $config "title" }}</span>
+                    <h1>{{ .Data.Term | default .Title }}</h1>
+                    <p class="bookstack-catalog-intro">共 {{ len .Pages }} 篇文档使用此{{ index $config "title" }}。</p>
+                </header>
+                {{ with .Content }}
+                    <div class="bookstack-section-intro docs-content main-content">{{ . }}</div>
+                {{ end }}
+                <div class="bookstack-doc-grid taxonomy-results">
+                    {{ range .Pages.ByTitle }}
+                        {{ partial "docs/taxonomy-page-card.html" . }}
+                    {{ end }}
+                </div>
+            </article>
+        </div>
+    </section>
+{{ end }}

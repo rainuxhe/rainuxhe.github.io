@@ -144,6 +144,112 @@ button:focus-visible {
     right: 1.25rem;
 }
 
+.docs-taxonomy {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0.45rem 0 1.35rem;
+}
+
+.docs-taxonomy-group {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.75rem;
+}
+
+.docs-taxonomy-label {
+    align-items: center;
+    color: var(--bookstack-muted);
+    display: inline-flex;
+    font-size: 0.76rem;
+    font-weight: 600;
+    gap: 0.25rem;
+    line-height: 1.9rem;
+    text-decoration: none;
+}
+
+.docs-taxonomy-label:hover {
+    color: var(--bookstack-focus);
+}
+
+.docs-taxonomy-label .material-icons {
+    font-size: 16px;
+}
+
+.docs-taxonomy-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.docs-taxonomy-chip {
+    align-items: center;
+    background: color-mix(in srgb, var(--bookstack-focus) 7%, var(--bookstack-surface));
+    border: 1px solid color-mix(in srgb, var(--bookstack-focus) 18%, var(--bookstack-line));
+    border-radius: 999px;
+    color: var(--bookstack-ink);
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1;
+    min-height: 30px;
+    padding: 0.4rem 0.7rem;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.docs-taxonomy-chip:hover {
+    background: color-mix(in srgb, var(--bookstack-focus) 13%, var(--bookstack-surface));
+    border-color: color-mix(in srgb, var(--bookstack-focus) 45%, var(--bookstack-line));
+    color: var(--bookstack-ink);
+}
+
+.bookstack-taxonomy-breadcrumb {
+    align-items: center;
+    color: var(--bookstack-muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.bookstack-taxonomy-breadcrumb a {
+    color: var(--bookstack-muted);
+    text-decoration: none;
+}
+
+.bookstack-taxonomy-breadcrumb a:hover {
+    color: var(--bookstack-focus);
+}
+
+.bookstack-taxonomy-breadcrumb .material-icons {
+    font-size: 16px;
+}
+
+.taxonomy-overview-count,
+.taxonomy-empty {
+    color: var(--bookstack-muted);
+    font-size: 0.9rem;
+    margin: 0.65rem 0 0;
+}
+
+.taxonomy-grid,
+.taxonomy-results {
+    margin-top: 1.5rem;
+}
+
+.taxonomy-card .bookstack-doc-card-title {
+    font-size: 1.2rem;
+}
+
+.taxonomy-results .bookstack-doc-card {
+    min-height: 170px;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

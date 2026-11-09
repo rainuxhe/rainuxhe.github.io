@@ -1,0 +1,41 @@
+{{ define "main" }}
+    {{- $config := partial "docs/taxonomy-config.html" (dict "plural" .Data.Plural) -}}
+    <section class="bookstack-catalog section taxonomy-overview">
+        <div class="container">
+            <article class="bookstack-page">
+                <nav class="bookstack-taxonomy-breadcrumb" aria-label="面包屑">
+                    <a href="{{ site.Home.RelPermalink }}">首页</a>
+                    <span class="material-icons" aria-hidden="true">chevron_right</span>
+                    <span aria-current="page">{{ index $config "title" }}</span>
+                </nav>
+                <header class="bookstack-catalog-heading">
+                    <span class="bookstack-eyebrow">{{ index $config "eyebrow" }}</span>
+                    <h1>{{ index $config "title" }}</h1>
+                    <p class="bookstack-catalog-intro">{{ index $config "description" }}</p>
+                    <p class="taxonomy-overview-count">共 {{ len .Pages }} 个{{ index $config "title" }}</p>
+                </header>
+                {{ with .Content }}
+                    <div class="bookstack-section-intro docs-content main-content">{{ . }}</div>
+                {{ end }}
+                {{ if .Pages }}
+                    <div class="bookstack-doc-grid taxonomy-grid">
+                        {{ range .Pages.ByTitle }}
+                            <a class="bookstack-doc-card taxonomy-card" href="{{ .RelPermalink }}">
+                                <span class="bookstack-doc-card-icon" aria-hidden="true">
+                                    <i class="material-icons">{{ index $config "icon" }}</i>
+                                </span>
+                                <span class="bookstack-doc-card-copy">
+                                    <span class="bookstack-doc-card-title">{{ .Data.Term | default .LinkTitle }}</span>
+                                    <span class="bookstack-doc-card-description">包含 {{ len .Pages }} 篇文档</span>
+                                </span>
+                                <i class="material-icons bookstack-doc-card-arrow" aria-hidden="true">arrow_forward</i>
+                            </a>
+                        {{ end }}
+                    </div>
+                {{ else }}
+                    <p class="taxonomy-empty">暂时还没有{{ index $config "title" }}。</p>
+                {{ end }}
+            </article>
+        </div>
+    </section>
+{{ end }}

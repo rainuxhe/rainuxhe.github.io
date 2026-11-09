@@ -1,6 +1,6 @@
 ---
 title: "Front Matter"
-description: "页面标题、描述、图标、草稿状态和 KaTeX 等单页配置。"
+description: "页面标题、描述、分类、标签、图标、草稿状态和 KaTeX 等单页配置。"
 icon: "data_object"
 weight: 40
 toc: true
@@ -16,6 +16,10 @@ icon: "article"
 weight: 10
 draft: false
 toc: true
+categories:
+  - "文档"
+tags:
+  - "hugo"
 ---
 ```
 
@@ -28,7 +32,23 @@ toc: true
 | `draft` | 是否需要 `hugo serve -D` 才构建 |
 | `toc` | 是否显示本页目录 |
 | `katex` | 是否加载 KaTeX |
+| `categories` | 页面分类，支持多个值 |
+| `tags` | 页面标签，支持多个值 |
 | `url` | 覆盖 Hugo 默认生成的 URL |
+
+## 分类与标签
+
+`categories` 和 `tags` 使用 Hugo taxonomy。配置后，它们会显示在页面描述下方，并链接到对应的聚合页：
+
+```yaml
+categories:
+  - "文档"
+tags:
+  - "hugo"
+  - "markdown"
+```
+
+聚合页的地址、标题和图标由站点配置控制，详见[站点配置](/docs/bookstack/configuration/site/#分类与标签)。
 
 ## 文档归属
 

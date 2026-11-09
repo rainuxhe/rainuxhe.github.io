@@ -1,0 +1,19 @@
+{{- $plural := .plural | default "tags" -}}
+{{- $defaults := dict
+    "categories" (dict
+        "title" "分类"
+        "eyebrow" "Categories"
+        "description" "按分类浏览站点中的全部文档。"
+        "icon" "category"
+    )
+    "tags" (dict
+        "title" "标签"
+        "eyebrow" "Tags"
+        "description" "按主题标签浏览站点中的全部文档。"
+        "icon" "sell"
+    )
+-}}
+{{- $fallback := dict "title" $plural "eyebrow" $plural "description" "" "icon" "sell" -}}
+{{- $default := index $defaults $plural | default $fallback -}}
+{{- $configured := index (site.Params.taxonomies | default dict) $plural | default dict -}}
+{{- return merge $default $configured -}}
