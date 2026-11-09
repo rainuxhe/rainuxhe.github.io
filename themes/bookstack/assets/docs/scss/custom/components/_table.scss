@@ -148,9 +148,161 @@ table {
     --bs-table-striped-bg: none;
 }
 
-// Responsive Table
-.table-responsive {
+// Content Tables
+.docs-content .main-content .table-responsive {
+    --table-row-hover-bg: color-mix(in srgb, var(--primary) 5%, var(--bookstack-surface));
+
+    background: var(--bookstack-surface);
+    border: 1px solid var(--bookstack-line);
+    border-radius: 0.85rem;
+    box-sizing: border-box;
     display: block;
-    width: 100%;
+    margin: 1.5rem 0;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-color: color-mix(in srgb, var(--bookstack-muted) 48%, transparent) transparent;
+    scrollbar-width: thin;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: color-mix(in srgb, var(--bookstack-muted) 45%, transparent);
+        background-clip: padding-box;
+        border: 3px solid transparent;
+        border-radius: 999px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in srgb, var(--bookstack-muted) 65%, transparent);
+        background-clip: padding-box;
+    }
+
+    > table {
+        border-collapse: separate;
+        border-spacing: 0;
+        color: var(--text-default);
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin: 0;
+        min-width: 100%;
+        width: 100%;
+    }
+
+    > table > :not(caption) > * > * {
+        background: transparent;
+        border: 0;
+        padding: 0.8rem 1rem;
+        vertical-align: top;
+    }
+
+    > table > caption {
+        color: var(--bookstack-muted);
+        padding: 0.75rem 1rem;
+        text-align: left;
+    }
+
+    > table > thead > tr > th {
+        background: color-mix(in srgb, var(--primary) 8%, var(--bookstack-surface));
+        border-bottom: 1px solid var(--bookstack-line);
+        color: var(--bookstack-ink);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        line-height: 1.4;
+        text-transform: none;
+        white-space: normal;
+    }
+
+    > table > tbody > tr > td,
+    > table > tbody > tr > th {
+        border-bottom: 1px solid color-mix(in srgb, var(--bookstack-line) 72%, transparent);
+    }
+
+    > table > tbody > tr:last-child > td,
+    > table > tbody > tr:last-child > th {
+        border-bottom: 0;
+    }
+
+    > table > thead > tr > th + th,
+    > table > tbody > tr > td + td,
+    > table > tbody > tr > th + td {
+        border-left: 1px solid color-mix(in srgb, var(--bookstack-line) 58%, transparent);
+    }
+
+    > table > tfoot > tr > * {
+        background: color-mix(in srgb, var(--bookstack-surface) 94%, var(--primary) 6%);
+        border-top: 1px solid var(--bookstack-line);
+        font-weight: 600;
+    }
+
+    > table > tbody > tr:hover > * {
+        background-color: var(--table-row-hover-bg);
+    }
+
+    > table.table > tbody > tr:hover > * {
+        --bs-table-bg-state: var(--table-row-hover-bg);
+    }
+
+    > table > tbody > tr:first-child > td:first-child,
+    > table > tbody > tr:first-child > td:last-child,
+    > table > tbody > tr:last-child > td:first-child,
+    > table > tbody > tr:last-child > td:last-child {
+        border-radius: 0;
+    }
+}
+
+.docs-content .main-content .table-responsive > table.table-sm > :not(caption) > * > *,
+.docs-content .main-content .table-responsive > table.table-striped > :not(caption) > * > *,
+.docs-content .main-content .table-responsive > table.table-borderless > :not(caption) > * > *,
+.docs-content .main-content .table-responsive > table.table-hover > :not(caption) > * > *,
+.docs-content .main-content .table-responsive > table.table-striped-columns > :not(caption) > * > * {
+    padding: 0.6rem 0.7rem;
+}
+
+.docs-content .main-content .table-responsive > table.table-xs > :not(caption) > * > * {
+    padding: 0.3rem 0.4rem;
+}
+
+.docs-content .main-content .table-responsive > table.table-borderless > thead > tr > th,
+.docs-content .main-content .table-responsive > table.table-borderless > thead > tr > th + th,
+.docs-content .main-content .table-responsive > table.table-borderless > tbody > tr > td + td,
+.docs-content .main-content .table-responsive > table.table-borderless > tbody > tr > th + td {
+    border: 0;
+}
+
+@media (max-width: 767.98px) {
+    .docs-content .main-content .table-responsive {
+        border-radius: 0.75rem;
+        margin: 1.25rem 0;
+
+        > table {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        > table > :not(caption) > * > * {
+            padding: 0.7rem 0.75rem;
+        }
+
+        > table > thead > tr > th {
+            font-size: 0.75rem;
+        }
+    }
+
+    .docs-content .main-content .table-responsive > table.table-sm > :not(caption) > * > *,
+    .docs-content .main-content .table-responsive > table.table-striped > :not(caption) > * > *,
+    .docs-content .main-content .table-responsive > table.table-borderless > :not(caption) > * > *,
+    .docs-content .main-content .table-responsive > table.table-hover > :not(caption) > * > *,
+    .docs-content .main-content .table-responsive > table.table-striped-columns > :not(caption) > * > * {
+        padding: 0.55rem 0.5rem;
+    }
 }

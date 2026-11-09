@@ -1,8 +1,19 @@
 {{ $htmlTable := .Inner | .Page.RenderString }}
-{{ $class := .Get 0 }}
-{{ $old := "<table>" }}
-{{ $new := printf "<table class=\"table %s\">" $class }}
-{{ $htmlTable := replace $htmlTable $old $new }}
-{{ $htmlTable := replaceRE "align=\"([a-z]+)\"" "style=\"text-align: $1\"" $htmlTable}}
+{{ $class := .Get 0 | default "" }}
+{{ $tableClass := printf "table %s" $class | strings.TrimSpace }}
+{{ $openTag := index (findRE `<table\b[^>]*>` $htmlTable 1) 0 }}
+
+{{ if $openTag }}
+    {{ $classMatch := index (findRESubmatch `\bclass="([^"]*)"` $openTag 1) 0 }}
+    {{ if $classMatch }}
+        {{ $existingClass := index $classMatch 1 }}
+        {{ $mergedClass := printf "%s %s" $tableClass $existingClass | strings.TrimSpace }}
+        {{ $newOpenTag := replaceRE `\bclass="[^"]*"` (printf `class="%s"` $mergedClass) $openTag 1 }}
+        {{ $htmlTable = replace $htmlTable $openTag $newOpenTag 1 }}
+    {{ else }}
+        {{ $newOpenTag := replaceRE `^<table` (printf `<table class="%s"` $tableClass) $openTag 1 }}
+        {{ $htmlTable = replace $htmlTable $openTag $newOpenTag 1 }}
+    {{ end }}
+{{ end }}
 
 {{ $htmlTable | safeHTML }}
