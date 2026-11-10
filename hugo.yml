@@ -143,7 +143,7 @@ params:
     - id: "a2a"
       title: "A2A 协议"
       path: "/docs/a2a/"
-      description: "A2A 协议模型、任务生命周期，以及 Python 服务端和客户端实践。"
+      description: "A2A 官方核心文档中文翻译，以及 Python 客户端和服务端示例。"
       icon: "hub"
       weight: 40
 

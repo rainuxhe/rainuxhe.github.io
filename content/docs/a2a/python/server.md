@@ -2,7 +2,7 @@
 title: "Python 服务端"
 description: "用 a2a-sdk 和 FastAPI 构建一个可发现、可流式返回的文本回显 Agent。"
 icon: "dns"
-weight: 30
+weight: 91
 toc: true
 ---
 

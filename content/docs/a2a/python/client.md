@@ -2,7 +2,7 @@
 title: "Python 客户端"
 description: "发现 Agent Card，发送消息，处理 Artifact、SSE 事件和多轮上下文。"
 icon: "send"
-weight: 40
+weight: 90
 toc: true
 tags:
   - "python"
