@@ -129,6 +129,26 @@ params:
 
 修改聚合页地址时，需要同时调整 `permalinks.taxonomy` 和 `permalinks.term` 中的路径。
 
+## 顶栏页面菜单
+
+顶栏右侧的单页下拉器由 `params.page_menu` 控制：
+
+```yaml
+params:
+  page_menu:
+    label: "更多页面"
+    icon: "apps"
+    items:
+      - name: "标签"
+        url: "/tags/"
+        icon: "sell"
+      - name: "分类"
+        url: "/categories/"
+        icon: "category"
+```
+
+条目保持 YAML 中的顺序。`icon` 使用 Material Icons 名称；未配置 `page_menu` 或 `items` 为空时，主题不会渲染下拉器。
+
 ## 文档主题参数
 
 ```yaml

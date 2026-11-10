@@ -20,6 +20,12 @@
             {{- partial "footer.html" . -}}
         </div>
 
+        {{ if eq .Site.Params.docs.darkMode true -}}
+            {{ $pathName := .Site.Params.docs.pathName | default "docs" }}
+            {{ $darkModeSwitch := resources.Get (printf "/%s/%s" $pathName "js/darkmode-switch.js") | js.Build | minify }}
+            <script>{{ $darkModeSwitch.Content | safeJS }}</script>
+        {{ end -}}
+
         <!-- Lotus Docs JS -->
         {{ $app := resources.Get "/js/app.js" }}
         {{- if not hugo.IsServer }}

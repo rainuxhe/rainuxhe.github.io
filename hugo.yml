@@ -60,6 +60,20 @@ params:
   description: "Bookstack 多文档技术手册"
   author: "Rainux He"
 
+  page_menu:
+    label: "更多页面"
+    icon: "apps"
+    items:
+      - name: "标签"
+        url: "/tags/"
+        icon: "sell"
+      - name: "分类"
+        url: "/categories/"
+        icon: "category"
+      # - name: "关于"
+      #   url: "/posts/about/"
+      #   icon: "info"
+
   taxonomies:
     categories:
       title: "分类"

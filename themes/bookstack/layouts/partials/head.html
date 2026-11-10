@@ -1,5 +1,10 @@
 <head>
     <meta charset="utf-8" />
+    {{- if eq .Site.Params.docs.darkMode true -}}
+        {{- $pathName := .Site.Params.docs.pathName | default "docs" -}}
+        {{- $darkModeInit := resources.Get (printf "/%s/%s" $pathName "js/darkmode-init.js") | js.Build | minify -}}
+        <script>{{ $darkModeInit.Content | safeJS }}</script>
+    {{- end -}}
     {{- $pageTitle := .Title -}}
     {{- if eq .Kind "term" -}}
         {{- $pageTitle = .Data.Term | default .Title -}}

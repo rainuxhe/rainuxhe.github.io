@@ -1,0 +1,29 @@
+{{- with site.Params.page_menu -}}
+    {{- with .items -}}
+        {{- $label := $.Site.Params.page_menu.label | default "更多页面" -}}
+        <div class="dropdown page-menu d-print-none">
+            <button id="page-menu-toggle" class="btn page-menu-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false" aria-haspopup="true" aria-controls="page-menu-dropdown" aria-label="{{ $label }}" title="{{ $label }}">
+                <span class="material-icons" aria-hidden="true">{{ $.Site.Params.page_menu.icon | default "arrow_drop_down_circle" }}</span>
+            </button>
+            <ul id="page-menu-dropdown" class="dropdown-menu dropdown-menu-end page-menu-dropdown" aria-labelledby="page-menu-toggle">
+                {{- range . }}
+                    {{- $url := .url | default "#" -}}
+                    {{- $external := or (hasPrefix $url "http://") (hasPrefix $url "https://") -}}
+                    {{- if not $external -}}
+                        {{- $url = $url | relLangURL -}}
+                    {{- end -}}
+                    {{- $active := and (not $external) (eq $url $.RelPermalink) -}}
+                    <li>
+                        <a class="dropdown-item page-menu-item{{ if $active }} active{{ end }}" href="{{ $url }}"{{ if $external }} target="_blank" rel="noopener noreferrer"{{ else if $active }} aria-current="page"{{ end }}>
+                            <span class="material-icons" aria-hidden="true">{{ .icon | default "link" }}</span>
+                            <span>{{ .name }}</span>
+                            {{- if $external }}
+                            <span class="material-icons page-menu-external-icon" aria-hidden="true">open_in_new</span>
+                            {{- end }}
+                        </a>
+                    </li>
+                {{- end }}
+            </ul>
+        </div>
+    {{- end -}}
+{{- end -}}

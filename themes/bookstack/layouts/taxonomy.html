@@ -3,34 +3,36 @@
     <section class="bookstack-catalog section taxonomy-overview">
         <div class="container">
             <article class="bookstack-page">
-                <nav class="bookstack-taxonomy-breadcrumb" aria-label="面包屑">
-                    <a href="{{ site.Home.RelPermalink }}">首页</a>
-                    <span class="material-icons" aria-hidden="true">chevron_right</span>
-                    <span aria-current="page">{{ index $config "title" }}</span>
-                </nav>
-                <header class="bookstack-catalog-heading">
-                    <span class="bookstack-eyebrow">{{ index $config "eyebrow" }}</span>
+                <header class="bookstack-catalog-heading taxonomy-overview-heading">
                     <h1>{{ index $config "title" }}</h1>
-                    <p class="bookstack-catalog-intro">{{ index $config "description" }}</p>
-                    <p class="taxonomy-overview-count">共 {{ len .Pages }} 个{{ index $config "title" }}</p>
                 </header>
                 {{ with .Content }}
                     <div class="bookstack-section-intro docs-content main-content">{{ . }}</div>
                 {{ end }}
                 {{ if .Pages }}
-                    <div class="bookstack-doc-grid taxonomy-grid">
-                        {{ range .Pages.ByTitle }}
-                            <a class="bookstack-doc-card taxonomy-card" href="{{ .RelPermalink }}">
-                                <span class="bookstack-doc-card-icon" aria-hidden="true">
-                                    <i class="material-icons">{{ index $config "icon" }}</i>
-                                </span>
-                                <span class="bookstack-doc-card-copy">
-                                    <span class="bookstack-doc-card-title">{{ .Data.Term | default .LinkTitle }}</span>
-                                    <span class="bookstack-doc-card-description">包含 {{ len .Pages }} 篇文档</span>
-                                </span>
-                                <i class="material-icons bookstack-doc-card-arrow" aria-hidden="true">arrow_forward</i>
-                            </a>
-                        {{ end }}
+                    <div class="taxonomy-letter-index">
+                        {{- $currentInitial := "" -}}
+                        {{- range .Pages.ByTitle }}
+                            {{- $termName := .Data.Term | default .LinkTitle -}}
+                            {{- $initial := substr (upper $termName) 0 1 -}}
+                            {{- if ne $initial $currentInitial }}
+                                {{- if $currentInitial }}
+                            </div>
+                        </section>
+                                {{- end }}
+                        <section class="taxonomy-letter-group">
+                            <h2>{{ $initial }}</h2>
+                            <div class="taxonomy-term-list">
+                                {{- $currentInitial = $initial -}}
+                            {{- end }}
+                                <a class="taxonomy-term-link" href="{{ .RelPermalink }}" aria-label="{{ $termName }}，{{ len .Pages }} 篇文档">
+                                    <span class="material-icons taxonomy-term-icon" aria-hidden="true">{{ index $config "icon" }}</span>
+                                    <span class="taxonomy-term-name">{{ $termName }}</span>
+                                    <span class="taxonomy-term-count">{{ len .Pages }}</span>
+                                </a>
+                        {{- end }}
+                            </div>
+                        </section>
                     </div>
                 {{ else }}
                     <p class="taxonomy-empty">暂时还没有{{ index $config "title" }}。</p>

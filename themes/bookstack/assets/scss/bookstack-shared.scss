@@ -49,6 +49,128 @@ button:focus-visible {
     outline-offset: 3px;
 }
 
+.page-menu {
+    margin-left: 0.5rem;
+}
+
+.page-menu-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 0.65rem;
+    color: var(--bookstack-ink);
+    display: inline-flex;
+    height: 44px;
+    justify-content: center;
+    opacity: 0.82;
+    padding: 0;
+    transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+    width: 44px;
+}
+
+.page-menu-toggle:hover,
+.page-menu-toggle[aria-expanded="true"] {
+    background: color-mix(in srgb, var(--bookstack-focus) 8%, transparent);
+    color: var(--bookstack-focus);
+    opacity: 1;
+}
+
+.page-menu-toggle .material-icons {
+    font-size: 24px;
+}
+
+.theme-toggle-button {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 0.65rem;
+    color: var(--bookstack-ink);
+    display: inline-flex;
+    height: 44px;
+    justify-content: center;
+    margin-left: 0.5rem;
+    opacity: 0.82;
+    padding: 0;
+    transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+    width: 44px;
+}
+
+.theme-toggle-button:hover,
+.theme-toggle-button:focus-visible {
+    background: color-mix(in srgb, var(--bookstack-focus) 8%, transparent);
+    color: var(--bookstack-focus);
+    opacity: 1;
+}
+
+.theme-toggle-button svg {
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+.theme-toggle-button .toggle-dark {
+    display: block;
+}
+
+.theme-toggle-button .toggle-light {
+    display: none;
+}
+
+[data-dark-mode] .theme-toggle-button .toggle-light {
+    display: block;
+}
+
+[data-dark-mode] .theme-toggle-button .toggle-dark {
+    display: none;
+}
+
+.page-menu-dropdown {
+    background: var(--bookstack-surface);
+    border: 1px solid var(--bookstack-line);
+    border-radius: 0.85rem !important;
+    box-shadow: 0 18px 44px color-mix(in srgb, var(--bookstack-ink) 16%, transparent);
+    max-width: calc(100vw - 2rem);
+    min-width: 12rem;
+    padding: 0.4rem;
+    width: max-content;
+}
+
+.page-menu-item {
+    align-items: center;
+    border-radius: 0.55rem;
+    color: var(--bookstack-ink);
+    display: flex;
+    font-size: 0.9rem;
+    font-weight: 500;
+    gap: 0.65rem;
+    min-height: 40px;
+    padding: 0.5rem 0.7rem;
+    white-space: normal;
+}
+
+.page-menu-item:hover,
+.page-menu-item:focus {
+    background: color-mix(in srgb, var(--bookstack-focus) 8%, var(--bookstack-surface));
+    color: var(--bookstack-ink);
+}
+
+.page-menu-item.active {
+    background: color-mix(in srgb, var(--bookstack-focus) 13%, var(--bookstack-surface));
+    color: var(--bookstack-focus);
+}
+
+.page-menu-item > .material-icons {
+    color: var(--bookstack-focus);
+    flex: 0 0 auto;
+    font-size: 18px;
+}
+
+.page-menu-external-icon {
+    color: var(--bookstack-muted) !important;
+    font-size: 16px !important;
+    margin-left: auto;
+}
+
 .bookstack-eyebrow {
     color: var(--bookstack-muted);
     display: inline-block;
@@ -230,20 +352,90 @@ button:focus-visible {
     font-size: 16px;
 }
 
-.taxonomy-overview-count,
 .taxonomy-empty {
     color: var(--bookstack-muted);
     font-size: 0.9rem;
     margin: 0.65rem 0 0;
 }
 
-.taxonomy-grid,
 .taxonomy-results {
     margin-top: 1.5rem;
 }
 
-.taxonomy-card .bookstack-doc-card-title {
+.taxonomy-overview-heading {
+    margin-bottom: 1.75rem;
+}
+
+.taxonomy-letter-index {
+    display: grid;
+    gap: 0;
+}
+
+.taxonomy-letter-group {
+    border-bottom: 1px solid var(--bookstack-line);
+    padding: 0.5rem 0 1.5rem;
+}
+
+.taxonomy-letter-group + .taxonomy-letter-group {
+    padding-top: 1.4rem;
+}
+
+.taxonomy-letter-group h2 {
+    color: var(--bookstack-ink);
+    font-family: "IBM Plex Mono", monospace;
     font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 0 1.25rem;
+}
+
+.taxonomy-term-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.taxonomy-term-link {
+    align-items: center;
+    background: color-mix(in srgb, var(--bookstack-surface) 96%, var(--bookstack-focus) 4%);
+    border: 1px solid var(--bookstack-line);
+    border-radius: 999px;
+    color: var(--bookstack-ink);
+    display: inline-flex;
+    font-size: 0.88rem;
+    font-weight: 500;
+    gap: 0.45rem;
+    min-height: 34px;
+    padding: 0.35rem 0.75rem;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.taxonomy-term-link:hover {
+    background: color-mix(in srgb, var(--bookstack-focus) 9%, var(--bookstack-surface));
+    border-color: color-mix(in srgb, var(--bookstack-focus) 38%, var(--bookstack-line));
+    color: var(--bookstack-ink);
+}
+
+.taxonomy-term-icon {
+    color: var(--bookstack-muted);
+    font-size: 15px;
+}
+
+.taxonomy-term-count {
+    color: var(--bookstack-muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+}
+
+@media (max-width: 767.98px) {
+    .taxonomy-letter-group {
+        padding-bottom: 1.25rem;
+    }
+
+    .taxonomy-letter-group h2 {
+        margin-bottom: 1rem;
+    }
 }
 
 .taxonomy-results .bookstack-doc-card {
