@@ -1,48 +1,42 @@
-/* Mermaid */
+/* Mermaid diagrams rendered by Pele */
 
-.docs-content .main-content pre {
+.docs-content .main-content pre.mermaid {
+    --pele-bg: var(--body-bg);
+    --pele-fg: var(--text-default);
+    --pele-muted: var(--text-muted);
+    --pele-line: var(--text-default);
+    --pele-surface: var(--bg-mermaid);
+    --pele-surface-alt: var(--bg-default);
+    --pele-border: var(--gray-400);
+    --pele-accent: var(--primary);
+    --pele-font: var(--bs-body-font-family);
+    --pele-font-mono: var(--bs-font-monospace);
 
-    &.mermaid {
-        background-color: transparent !important;
-        text-align: center !important;
-        .messageText {
-            fill: var(--text-default) !important;
-        }
-        .messageLine0,
-        .messageLine1 {
-            stroke: var(--text-default) !important;
-        }
-        #arrowhead path,
-        #crosshead path {
-            fill: var(--text-default) !important;
-            stroke: var(--text-default) !important;
-        }
-        .edgePaths path {
-            stroke: var(--text-default) !important;
-        }
-        .marker {
-            fill: var(--text-default) !important;
-            stroke: var(--text-default) !important;
-        }
-        .grid .tick {
-            stroke: var(--text-default) !important;
+    background: transparent !important;
+    border-radius: 4px;
+    margin: 1.25rem auto;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0;
+    text-align: center;
 
-            text {
-                fill: var(--text-default) !important;
-            }
-        }
-        line {
-            stroke: var(--text-default) !important;
-        }
-        text {
-            fill: var(--text-default) !important;
-        }
-        #sequencenumber circle {
-            fill: var(--bg-mermaid) !important;
-            stroke: var(--text-default) !important;
-        }
-        .sequenceNumber {
-            fill: var(--text-default) !important;
-        }
+    &.pele-mounted {
+        visibility: visible;
     }
+
+    svg.pele {
+        display: inline-block;
+        margin-inline: auto;
+    }
+}
+
+.pele-enabled .docs-content .main-content pre.mermaid:not(.pele-mounted) {
+    visibility: hidden;
+}
+
+[data-dark-mode] .docs-content .main-content pre.mermaid {
+    --pele-surface: var(--gray-800);
+    --pele-surface-alt: var(--gray-700);
+    --pele-border: var(--gray-600);
+    --pele-accent: var(--primary-200);
 }

@@ -6,19 +6,31 @@
     {{ end -}}
 
     {{ if .Page.Store.Get "hasMermaid" }}
-    {{ $mermaid := resources.Get (printf "%s/%s" ($.Scratch.Get "pathName") "js/mermaid.min.js") }}
+    {{ $pele := resources.Get (printf "%s/%s" ($.Scratch.Get "pathName") "js/pele.global.js") }}
     {{ if hugo.IsProduction }}
-        {{ $mermaid = $mermaid | fingerprint "sha384" }}
+        {{ $pele = $pele | fingerprint "sha384" }}
     {{ end }}
-    <script src="{{ $mermaid.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $mermaid.Data.Integrity }}"{{ end }}></script>
+    <script src="{{ $pele.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $pele.Data.Integrity }}" {{ end }}defer onerror="document.documentElement.classList.remove('pele-enabled')"></script>
     <script>
-        const config = {
-            startOnLoad:true,
-            logLevel: "error",
-            align: "center",
-            theme:"null"
-        };
-        mermaid.initialize(config);
+        document.documentElement.classList.add("pele-enabled");
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!window.pele) {
+                document.documentElement.classList.remove("pele-enabled");
+                return;
+            }
+            document.querySelectorAll("#content pre.mermaid").forEach((element) => {
+                window.pele.mount(element, element.textContent, {
+                    zoom: {
+                        labels: {
+                            zoomIn: "放大图表",
+                            zoomOut: "缩小图表",
+                            reset: "重置缩放"
+                        }
+                    }
+                });
+                element.classList.add("pele-mounted");
+            });
+        });
     </script>
     {{ end }}
 
