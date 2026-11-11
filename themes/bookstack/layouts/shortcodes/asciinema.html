@@ -1,0 +1,163 @@
+{{- $file := .Get "file" | default (.Get 0) -}}
+{{- $ok := true -}}
+{{- $src := "" -}}
+{{- $remote := false -}}
+
+{{- if not $file -}}
+    {{- warnf "%s: asciinema requires a file parameter; rendering nothing" .Position -}}
+    {{- $ok = false -}}
+{{- else -}}
+    {{- $file = strings.TrimSpace (printf "%v" $file) -}}
+    {{- $parsed := urls.Parse $file -}}
+    {{- if $parsed.Scheme -}}
+        {{- if in (slice "http" "https") (lower $parsed.Scheme) -}}
+            {{- $src = $file -}}
+            {{- $remote = true -}}
+        {{- else -}}
+            {{- warnf "%s: asciinema only supports http and https remote files; rendering nothing" .Position -}}
+            {{- $ok = false -}}
+        {{- end -}}
+    {{- else if $parsed.Host -}}
+        {{- warnf "%s: asciinema does not support protocol-relative file URLs; rendering nothing" .Position -}}
+        {{- $ok = false -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if and $ok (not $remote) -}}
+    {{- $lookup := strings.TrimPrefix "/" $file -}}
+    {{- if in (split $lookup "/") ".." -}}
+        {{- warnf "%s: asciinema file paths cannot contain '..'; rendering nothing" .Position -}}
+        {{- $ok = false -}}
+    {{- else -}}
+        {{- with resources.Get $lookup -}}
+            {{- $src = .RelPermalink -}}
+        {{- else -}}
+            {{- $src = $lookup | relURL -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if $ok -}}
+    {{- $title := .Get "title" | default $file -}}
+    {{- $themes := slice
+        "auto"
+        "bookstack-light"
+        "bookstack-dark"
+        "asciinema"
+        "dracula"
+        "gruvbox-dark"
+        "monokai"
+        "nord"
+        "seti"
+        "solarized-dark"
+        "solarized-light"
+        "tango"
+    -}}
+    {{- $theme := lower (strings.TrimSpace (printf "%v" (.Get "theme" | default "auto"))) -}}
+    {{- if not (in $themes $theme) -}}
+        {{- warnf "%s: asciinema theme %q is not supported; using auto" .Position $theme -}}
+        {{- $theme = "auto" -}}
+    {{- end -}}
+
+    {{- $fit := lower (strings.TrimSpace (printf "%v" (.Get "fit" | default "width"))) -}}
+    {{- if not (in (slice "width" "height" "both" "none") $fit) -}}
+        {{- warnf "%s: asciinema fit must be width, height, both, or none; using width" .Position -}}
+        {{- $fit = "width" -}}
+    {{- end -}}
+
+    {{- $numberPattern := `^[0-9]{1,6}(\.[0-9]{1,4})?$` -}}
+    {{- $speed := 1.0 -}}
+    {{- with .Get "speed" -}}
+        {{- $raw := strings.TrimSpace (printf "%v" .) -}}
+        {{- if and (findRE $numberPattern $raw) (gt (float $raw) 0.0) -}}
+            {{- $speed = float $raw -}}
+        {{- else -}}
+            {{- warnf "%s: asciinema speed must be a positive number; using 1" $.Position -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $startAt := 0.0 -}}
+    {{- with .Get "startAt" -}}
+        {{- $raw := strings.TrimSpace (printf "%v" .) -}}
+        {{- if findRE $numberPattern $raw -}}
+            {{- $startAt = float $raw -}}
+        {{- else -}}
+            {{- warnf "%s: asciinema startAt must be a number of seconds; using 0" $.Position -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $options := dict
+        "autoPlay" (eq (lower (printf "%v" (.Get "autoplay"))) "true")
+        "fit" $fit
+        "loop" (eq (lower (printf "%v" (.Get "loop"))) "true")
+        "preload" (eq (lower (printf "%v" (.Get "preload"))) "true")
+        "speed" $speed
+        "startAt" $startAt
+    -}}
+
+    {{- with .Get "poster" -}}
+        {{- $options = merge $options (dict "poster" (strings.TrimSpace (printf "%v" .))) -}}
+    {{- end -}}
+
+    {{- range $key := slice "cols" "rows" -}}
+        {{- with $.Get $key -}}
+            {{- $raw := strings.TrimSpace (printf "%v" .) -}}
+            {{- if findRE `^[1-9][0-9]{0,4}$` $raw -}}
+                {{- $options = merge $options (dict $key (int $raw)) -}}
+            {{- else -}}
+                {{- warnf "%s: asciinema %s must be a positive whole number; ignoring it" $.Position $key -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- with .Get "idleTimeLimit" -}}
+        {{- $raw := strings.TrimSpace (printf "%v" .) -}}
+        {{- if findRE $numberPattern $raw -}}
+            {{- $options = merge $options (dict "idleTimeLimit" (float $raw)) -}}
+        {{- else -}}
+            {{- warnf "%s: asciinema idleTimeLimit must be a number of seconds; ignoring it" $.Position -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if eq (lower (printf "%v" (.Get "pauseOnMarkers"))) "true" -}}
+        {{- $options = merge $options (dict "pauseOnMarkers" true) -}}
+    {{- end -}}
+
+    {{- with .Get "markers" -}}
+        {{- $markers := slice -}}
+        {{- range split . "," -}}
+            {{- $marker := strings.TrimSpace . -}}
+            {{- if $marker -}}
+                {{- $parts := split $marker ":" -}}
+                {{- $timeRaw := strings.TrimSpace (index $parts 0) -}}
+                {{- if not (findRE $numberPattern $timeRaw) -}}
+                    {{- warnf "%s: asciinema marker %q needs a numeric time; skipping it" $.Position $marker -}}
+                {{- else -}}
+                    {{- $label := strings.TrimSpace (delimit (after 1 $parts) ":") -}}
+                    {{- $markers = $markers | append (dict "time" (float $timeRaw) "label" $label) -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with $markers -}}
+            {{- $options = merge $options (dict "markers" .) -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $id := printf "bookstack-asciinema-%s" (md5 .Position) -}}
+    {{- $config := dict "src" $src "theme" $theme "options" $options -}}
+    {{- .Page.Store.Set "hasAsciinema" true -}}
+
+<figure id="{{ $id }}" class="bookstack-asciinema" data-bookstack-asciinema data-timer-label="播放时间" aria-busy="true">
+    <div class="bookstack-asciinema__chrome">
+        <span class="bookstack-asciinema__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="bookstack-asciinema__title">{{ $title }}</span>
+    </div>
+    <div class="bookstack-asciinema__player" data-bookstack-asciinema-player></div>
+    <noscript>
+        <a class="bookstack-asciinema__fallback" href="{{ $src }}">打开终端录像：{{ $title }}</a>
+    </noscript>
+    <a class="bookstack-asciinema__fallback bookstack-asciinema__fallback--runtime" href="{{ $src }}">浏览器无法加载播放器，打开终端录像：{{ $title }}</a>
+    <a class="bookstack-asciinema__fallback bookstack-asciinema__fallback--print" href="{{ $src }}">终端录像：{{ $title }}</a>
+    <script type="application/json" data-bookstack-asciinema-config>{{ $config | jsonify | safeJS }}</script>
+</figure>
+{{- end -}}

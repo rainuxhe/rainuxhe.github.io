@@ -1,5 +1,14 @@
 # Third-party licenses
 
+## Asciinema Player 3.18.0
+
+Copyright 2011 Marcin Kulik.
+
+Licensed under the Apache License, Version 2.0. The complete license text is
+included at `assets/docs/vendor/asciinema/LICENSE`.
+
+Source: <https://github.com/asciinema/asciinema-player>
+
 ## Pele 1.13.0
 
 MIT License

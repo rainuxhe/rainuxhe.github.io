@@ -1,0 +1,193 @@
+.docs-content .main-content .bookstack-asciinema {
+    --bookstack-asciinema-chrome: color-mix(in srgb, var(--bookstack-surface) 90%, var(--bookstack-ink) 10%);
+    --bookstack-asciinema-line: color-mix(in srgb, var(--bookstack-line) 82%, var(--bookstack-ink) 18%);
+    --bookstack-asciinema-muted: var(--bookstack-muted);
+
+    background: var(--bookstack-surface);
+    border: 1px solid var(--bookstack-asciinema-line);
+    border-radius: 0.7rem;
+    box-shadow: 0 16px 34px color-mix(in srgb, var(--bookstack-ink) 10%, transparent);
+    margin: 1.25rem 0 1.6rem;
+    overflow: hidden;
+    position: relative;
+}
+
+[data-dark-mode] .docs-content .main-content .bookstack-asciinema {
+    --bookstack-asciinema-chrome: color-mix(in srgb, var(--bookstack-surface) 88%, var(--bookstack-ink) 12%);
+    --bookstack-asciinema-line: color-mix(in srgb, var(--bookstack-line) 75%, var(--bookstack-ink) 25%);
+    box-shadow: 0 18px 38px color-mix(in srgb, #000 28%, transparent);
+}
+
+.docs-content .main-content .bookstack-asciinema:focus-within {
+    border-color: var(--bookstack-focus);
+    box-shadow:
+        0 0 0 3px color-mix(in srgb, var(--bookstack-focus) 22%, transparent),
+        0 16px 34px color-mix(in srgb, var(--bookstack-ink) 10%, transparent);
+}
+
+.bookstack-asciinema__chrome {
+    align-items: center;
+    background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--bookstack-asciinema-chrome) 94%, #fff 6%),
+        var(--bookstack-asciinema-chrome)
+    );
+    border-bottom: 1px solid var(--bookstack-asciinema-line);
+    color: var(--bookstack-asciinema-muted);
+    display: flex;
+    min-height: 2.55rem;
+    padding-inline: 0.85rem;
+}
+
+.bookstack-asciinema__lights {
+    display: inline-flex;
+    flex: 0 0 2.4rem;
+    gap: 0.38rem;
+}
+
+.bookstack-asciinema__lights i {
+    background: #ef6b63;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    display: block;
+    height: 0.58rem;
+    width: 0.58rem;
+}
+
+.bookstack-asciinema__lights i:nth-child(2) {
+    background: #e6b34f;
+}
+
+.bookstack-asciinema__lights i:nth-child(3) {
+    background: #58be7e;
+}
+
+.bookstack-asciinema__title {
+    color: var(--bookstack-ink);
+    flex: 1;
+    font-family: var(--bs-body-font-family);
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    min-width: 0;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bookstack-asciinema__chrome::after {
+    content: "";
+    flex: 0 0 2.4rem;
+}
+
+.bookstack-asciinema__player {
+    background: var(--bookstack-surface);
+    min-height: 4rem;
+}
+
+.bookstack-asciinema__player .ap-wrapper {
+    height: auto;
+}
+
+.bookstack-asciinema__player .ap-player {
+    border-radius: 0;
+    max-width: 100%;
+}
+
+.bookstack-asciinema__player .ap-player,
+.bookstack-asciinema__player .ap-wrapper,
+.bookstack-asciinema__player .ap-term {
+    background: var(--term-color-background);
+}
+
+.bookstack-asciinema__player .ap-control-bar {
+    border-top-color: color-mix(
+        in srgb,
+        var(--term-color-foreground) 18%,
+        var(--term-color-background)
+    );
+}
+
+.bookstack-asciinema__player .ap-control-bar .ap-button:hover,
+.bookstack-asciinema__player .ap-control-bar .ap-button:focus-visible {
+    background: color-mix(in srgb, var(--term-color-foreground) 12%, transparent);
+}
+
+.bookstack-asciinema__player .ap-control-bar .ap-progressbar .ap-bar .ap-gutter-full {
+    background: var(--bookstack-accent);
+}
+
+.bookstack-asciinema__fallback {
+    background: color-mix(in srgb, var(--bookstack-focus) 7%, var(--bookstack-surface));
+    border-top: 1px solid var(--bookstack-asciinema-line);
+    color: var(--bookstack-focus) !important;
+    display: block;
+    font-size: 0.88rem;
+    padding: 0.8rem 1rem;
+    text-align: center;
+}
+
+.bookstack-asciinema__fallback--runtime,
+.bookstack-asciinema__fallback--print {
+    display: none;
+}
+
+.bookstack-asciinema.is-failed .bookstack-asciinema__fallback--runtime {
+    display: block;
+}
+
+.asciinema-player-theme-bookstack-light {
+    --term-color-foreground: #1d2a4d;
+    --term-color-background: #fffdf8;
+    --term-color-0: #1d2a4d;
+    --term-color-1: #b43d3d;
+    --term-color-2: #2f7b52;
+    --term-color-3: #986514;
+    --term-color-4: #3159b7;
+    --term-color-5: #80509f;
+    --term-color-6: #16717b;
+    --term-color-7: #5d6475;
+}
+
+.asciinema-player-theme-bookstack-dark {
+    --term-color-foreground: #e8edff;
+    --term-color-background: #121722;
+    --term-color-0: #68758d;
+    --term-color-1: #ff8585;
+    --term-color-2: #79d29b;
+    --term-color-3: #f1bd61;
+    --term-color-4: #9db9ff;
+    --term-color-5: #c8a6ff;
+    --term-color-6: #71d6da;
+    --term-color-7: #e8edff;
+}
+
+@media (max-width: 575.98px) {
+    .bookstack-asciinema__chrome {
+        min-height: 2.35rem;
+        padding-inline: 0.7rem;
+    }
+
+    .bookstack-asciinema__title {
+        font-size: 0.7rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bookstack-asciinema {
+        transition: none;
+    }
+}
+
+@media print {
+    .bookstack-asciinema__chrome,
+    .bookstack-asciinema__player {
+        display: none;
+    }
+
+    .bookstack-asciinema__fallback--print {
+        display: block;
+    }
+}

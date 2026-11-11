@@ -48,6 +48,22 @@
         {{- $style = $style | minify | fingerprint "sha384" }}
     {{- end -}}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $style.Data.Integrity }}"{{ end -}} crossorigin="anonymous">
+    <!-- Asciinema Player -->
+    {{- if and .IsPage (.HasShortcode "asciinema") -}}
+        {{- $playerCSS := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "vendor/asciinema/asciinema-player.min.css") }}
+        {{- $asciinemaSCSS := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "scss/asciinema.scss") }}
+        {{- $asciinemaSCSS = $asciinemaSCSS | css.Sass $options }}
+        {{- $asciinemaCSS := slice $playerCSS $asciinemaSCSS | resources.Concat (printf "/%s/%s" ($.Scratch.Get "pathName") "css/asciinema-bundle.css") }}
+        {{- $playerJS := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "vendor/asciinema/asciinema-player.min.js") }}
+        {{- $asciinemaJS := resources.Get (printf "/%s/%s" ($.Scratch.Get "pathName") "js/asciinema.js") }}
+        {{- $asciinemaJS := slice $playerJS $asciinemaJS | resources.Concat (printf "/%s/%s" ($.Scratch.Get "pathName") "js/asciinema-bundle.js") }}
+        {{- if hugo.IsProduction }}
+            {{- $asciinemaCSS = $asciinemaCSS | minify | fingerprint "sha384" }}
+            {{- $asciinemaJS = $asciinemaJS | minify | fingerprint "sha384" }}
+        {{- end }}
+        <link rel="stylesheet" href="{{ $asciinemaCSS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $asciinemaCSS.Data.Integrity }}"{{ end -}} crossorigin="anonymous">
+        <script src="{{ $asciinemaJS.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $asciinemaJS.Data.Integrity }}"{{ end -}} crossorigin="anonymous" defer></script>
+    {{- end -}}
     <!-- Katex CSS -->
     {{- if .Params.katex -}}
     {{- $options := dict "transpiler" "dartsass" "enableSourceMap" true "silenceDeprecations" $sassSilenced }}
