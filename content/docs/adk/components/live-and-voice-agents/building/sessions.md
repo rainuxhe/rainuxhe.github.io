@@ -271,7 +271,7 @@ run_config = RunConfig(
 将 `trigger_tokens` 设置为模型上下文窗口的约 70-80% 以保留空间，
 将 `target_tokens` 设置为 60-70%，以便每次压缩都能释放足够的空间用于多个轮次。请根据您自己的对话模式进行测试。当会话必须超过平台限制或可能超过令牌限制时，启用压缩；对于短会话或需要精确回忆早期轮次的情况，请关闭压缩。
 
-## 并发会话 { #concurrent-sessions } {#concurrent-sessions--concurrent-sessions}
+## 并发会话 {#concurrent-sessions}
 
 每个用户都需要自己的实时 API 会话，并且两个后端都对并发会话数设有限制。您的并发会话上限是同时在线用户的硬性上限。有关当前上限以及如何申请提高，请参见 [Supported models](/docs/adk/components/live-and-voice-agents/supported-models/#platform-limits-and-quotas)。
 

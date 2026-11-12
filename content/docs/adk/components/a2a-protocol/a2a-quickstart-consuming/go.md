@@ -33,7 +33,7 @@ A2A 基本示例包括：
 
 在 `a2a_basic` 示例中，您首先需要通过 A2A 服务器公开 `check_prime_agent`，以便本地根 Agent 可以使用它。
 
-### 1. 获取示例代码 { #getting-the-sample-code } {#1-getting-the-sample-code--getting-the-sample-code}
+### 1. 获取示例代码 {#getting-the-sample-code}
 
 首先，确保您已安装 Go 并设置好您的环境。
 
@@ -67,7 +67,7 @@ a2a_basic/
 - **`checkPrimeTool`**: 质数检查算法
 - **`main`**: 质数检查服务和 A2A 服务器的实现
 
-### 2. 启动远程质数 Agent 服务器 { #start-the-remote-prime-agent-server } {#2-start-the-remote-prime-agent-server--start-the-remote-prime-agent-server}
+### 2. 启动远程质数 Agent 服务器 {#start-the-remote-prime-agent-server}
 
 为了演示你的 ADK Agent 如何通过 A2A 使用远程 Agent，你首先需要启动一个远程 Agent 服务器，该服务器将承载质数 Agent（在 `check_prime_agent` 下）。
 
@@ -86,13 +86,13 @@ go run remote_a2a/check_prime_agent/main.go
 2025/11/06 11:00:19        a2a:  you can access A2A using jsonrpc protocol: http://localhost:8001
 ```
 
-### 3. 注意远程 Agent 所需的 Agent 卡 { #look-out-for-the-required-agent-card-of-the-remote-agent } {#3-look-out-for-the-required-agent-card-of-the-remote-agent--look-out-for-the-required-agent-card-of-the-remote-agent}
+### 3. 注意远程 Agent 所需的 Agent 卡 {#look-out-for-the-required-agent-card-of-the-remote-agent}
 
 A2A 协议要求每个 Agent 必须拥有一张描述其功能的 Agent 卡。
 
 在 Go ADK 中，当你使用 A2A 启动器公开一个 Agent 时，Agent 卡会动态生成。你可以访问 `http://localhost:8001/.well-known/agent-card.json` 来查看生成的 Agent 卡。
 
-### 4. 运行主（消费）Agent { #run-the-main-consuming-agent } {#4-run-the-main-consuming-agent--run-the-main-consuming-agent}
+### 4. 运行主（消费）Agent {#run-the-main-consuming-agent}
 
   ```bash
   # In a separate terminal, run the main agent

@@ -25,9 +25,6 @@ toc: true
 `openaimodel` 包提供了一个用于与 OpenAI API 交互的客户端。它实现了 `model.LLM` 接口，并默认使用 OpenAI Responses API，或者在 `ClientConfig.API` 选择时使用 [Chat Completions API](#chat-completions-api)。
 以下代码示例展示了在你的 Agent 中使用 OpenAI 模型的基本实现：
 
-{{< tabs tabTotal="1" >}}
-{{% tab tabName="Go" %}}
-
 {{< tabs tabTotal="2" >}}
 {{% tab tabName="Responses API" %}}
 
@@ -96,8 +93,6 @@ if err != nil {
 ```
 
 要获取完整的可运行示例，请参见 ADK Go 仓库中的 [examples/openai/completions/](https://github.com/google/adk-go/tree/main/examples/openai/completions)。
-{{% /tab %}}
-{{< /tabs >}}
 {{% /tab %}}
 {{< /tabs >}}
 

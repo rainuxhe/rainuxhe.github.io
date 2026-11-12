@@ -773,8 +773,7 @@ curl -X POST \
 
 Python ADK REST API 在 JSON 请求体中使用 `snake_case` 字段名称（例如 `app_name`、`user_id`、`new_message`）。Go ADK REST API 使用 `camelCase`（例如 `appName`、`userId`、`newMessage`）。请使用适用于你部署语言的正确格式。
 {{% /alert %}}
-{{< tabs tabTotal="2" >}}
-{{% tab tabName="Python" %}}
+**Python**
 
 ```bash
 curl -X POST $APP_URL/run_sse \
@@ -793,8 +792,7 @@ curl -X POST $APP_URL/run_sse \
     }'
 ```
 
-{{% /tab %}}
-{{% tab tabName="Go" %}}
+**Go**
 
 ```bash
 curl -X POST $APP_URL/api/run_sse \
@@ -813,8 +811,6 @@ curl -X POST $APP_URL/api/run_sse \
     }'
 ```
 
-{{% /tab %}}
-{{< /tabs >}}
 * 如果您想接收服务器发送事件（SSE），请设置 `"streaming": true`。
 * 响应将包含 Agent 的执行事件，包括最终答案。
 {{% /tab %}}

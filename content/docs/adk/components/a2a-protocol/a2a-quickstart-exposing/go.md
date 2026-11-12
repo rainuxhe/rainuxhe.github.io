@@ -32,7 +32,7 @@ toc: true
 
 您可以使用 A2A 启动器，将现有的使用 Go ADK 构建的 Agent 变为 A2A 兼容。
 
-### 1. 获取示例代码 { #getting-the-sample-code } {#1-getting-the-sample-code--getting-the-sample-code}
+### 1. 获取示例代码 {#getting-the-sample-code}
 
 首先，确保您已安装 Go 并且环境已设置好。
 
@@ -63,7 +63,7 @@ a2a_basic/
 - **`checkPrimeTool`**：用于检查质数的函数。
 - **`main`**：创建 Agent 并启动 A2A 服务器的主函数。
 
-### 2. 启动远程 A2A Agent 服务器 { #start-the-remote-a2a-agent-server } {#2-start-the-remote-a2a-agent-server--start-the-remote-a2a-agent-server}
+### 2. 启动远程 A2A Agent 服务器 {#start-the-remote-a2a-agent-server}
 
 现在您可以启动远程 Agent 服务器，它将托管 `check_prime_agent`：
 
@@ -82,7 +82,7 @@ go run remote_a2a/check_prime_agent/main.go
 2025/11/06 11:00:19        a2a:  you can access A2A using jsonrpc protocol: http://localhost:8001
 ```
 
-### 3. 检查您的远程 Agent 是否正在运行 { #check-that-your-remote-agent-is-running } {#3-check-that-your-remote-agent-is-running--check-that-your-remote-agent-is-running}
+### 3. 检查您的远程 Agent 是否正在运行 {#check-that-your-remote-agent-is-running}
 
 您可以通过访问由 A2A 启动器自动生成的 Agent 卡来检查您的 Agent 是否已启动并运行：
 
@@ -90,7 +90,7 @@ go run remote_a2a/check_prime_agent/main.go
 
 您应该能看到 Agent 卡的内容。
 
-### 4. 运行主（消费）Agent { #run-the-main-consuming-agent } {#4-run-the-main-consuming-agent--run-the-main-consuming-agent}
+### 4. 运行主（消费）Agent {#run-the-main-consuming-agent}
 
 现在您的远程 Agent 正在运行，您可以运行主 Agent。
 

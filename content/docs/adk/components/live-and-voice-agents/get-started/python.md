@@ -36,7 +36,7 @@ python3 -m venv .venv
 pip install google-adk
 ```
 
-## 2. 项目结构 { #project-structure } {#2-project-structure--project-structure}
+## 2. 项目结构 {#project-structure}
 
 创建以下文件夹结构，并包含空文件：
 
@@ -87,7 +87,7 @@ root_agent = Agent(
 from . import agent
 ```
 
-## 3\. 设置平台 { #set-up-the-platform } {#3-set-up-the-platform--set-up-the-platform}
+## 3\. 设置平台 {#set-up-the-platform}
 
 要运行 Agent，请从 Google AI Studio 或 Google Cloud Agent Platform 中选择一个平台：
 
@@ -122,7 +122,7 @@ from . import agent
 有关从 ADK Agent 连接到 Google Cloud 的更多信息，请参见
 [连接到 Google Cloud 和 Agent 平台 ](/docs/adk/build/get-started/google-cloud/)。
 
-## 4. 使用 `adk web` 尝试 Agent { #try-the-agent-with-adk-web } {#4-try-the-agent-with-adk-web--try-the-agent-with-adk-web}
+## 4. 使用 `adk web` 尝试 Agent {#try-the-agent-with-adk-web}
 
 现在可以尝试 Agent 了。运行以下命令以启动 **开发界面**。首先，确保将当前目录设置为 `app`：
 
@@ -133,7 +133,7 @@ cd app
 另外，使用以下命令设置 `SSL_CERT_FILE` 变量。这对于后续的语音和视频测试是必需的。
 
 {{< tabs tabTotal="2" >}}
-{{% tab tabName="OS X &amp; Linux" %}}
+{{% tab tabName="OS X & Linux" %}}
 
 ```bash
 export SSL_CERT_FILE=$(python3 -m certifi)

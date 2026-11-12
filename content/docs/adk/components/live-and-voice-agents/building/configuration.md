@@ -81,7 +81,7 @@ ADK 默认情况下，删除`response_modalities`行通常是全部解决办法�
 响应模式只影响模型输出——**你随时可以发送文本、语音或视频
 输入**（如果模型支持该输入模态），无论如何。
 
-## Bidi-streaming 或 SSE { #streamingmode-bidi-or-sse } {#bidi-streaming-or-sse--streamingmode-bidi-or-sse}
+## Bidi-streaming 或 SSE {#streamingmode-bidi-or-sse}
 
 ADK 可以通过两个不同的端点访问Gemini，**你调用的`Runner`方法是
 选择哪一个**：

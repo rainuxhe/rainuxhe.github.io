@@ -68,7 +68,7 @@ config = RunConfig(
 {{% /tab %}}
 {{< /tabs >}}
 
-## 文本响应选项 { #enable-streaming } {#text-response-options--enable-streaming}
+## 文本响应选项 {#enable-streaming}
 
 您可以控制 Agent 在文本模式下的响应方式，是逐字生成，还是一次性完整响应，如下所述的 ***流式模式*** 参数：
 

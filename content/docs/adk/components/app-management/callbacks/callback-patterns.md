@@ -12,7 +12,7 @@ toc: true
 
 这些模式展示了使用回调增强或控制 Agent 行为的典型方法：
 
-### 1. 安全策略与策略执行 { #guardrails-policy-enforcement } {#1-guardrails--policy-enforcement--guardrails-policy-enforcement}
+### 1. 安全策略与策略执行 {#guardrails-policy-enforcement}
 
 **模式概述：**
 在请求到达 LLM 或工具之前拦截请求以执行规则。
@@ -27,7 +27,7 @@ toc: true
 **示例用例：**
 一个 `before_model_callback` 检查 `llm_request.contents` 是否包含敏感关键字，如果发现则返回标准“无法处理此请求”`LlmResponse`，从而阻止 LLM 调用。
 
-### 2. 动态状态管理 { #dynamic-state-management } {#2-dynamic-state-management--dynamic-state-management}
+### 2. 动态状态管理 {#dynamic-state-management}
 
 **模式概述：**
 在回调中读取和写入会话状态，使 Agent 行为具有上下文感知能力，并在步骤之间传递数据。
@@ -40,7 +40,7 @@ toc: true
 **示例用例：**
 一个 `after_tool_callback` 将工具结果中的 `transaction_id` 保存到 `tool_context.state['last_transaction_id']`。稍后的 `before_agent_callback` 可能读取 `state['user_tier']` 来定制 Agent 的问候语。
 
-### 3. 日志记录与监控 { #logging-and-monitoring } {#3-logging-and-monitoring--logging-and-monitoring}
+### 3. 日志记录与监控 {#logging-and-monitoring}
 
 **模式概述：**
 在特定生命周期点添加详细日志，以便观察和调试。
@@ -56,7 +56,7 @@ toc: true
 **示例用例：**
 记录类似 `INFO: [Invocation: e-123] Before Tool: search_api - Args: {'query': 'ADK'}` 的消息。
 
-### 4. 缓存 { #caching } {#4-caching--caching}
+### 4. 缓存 {#caching}
 
 **模式概述：**
 通过缓存结果避免重复的 LLM 调用或工具执行。
@@ -71,7 +71,7 @@ toc: true
    - 使用相应的 `after_` 回调将新结果存储到缓存中，使用该键**示例用例：**
 `before_tool_callback` 用于`get_stock_price(symbol)`检查 `state[f"cache:stock:{symbol}"]`。如果存在，返回缓存价格;否则，允许 API 调用，`after_tool_callback` 将结果保存到状态键中。
 
-### 5.请求/响应修改 { #request-response-modification } {#5-requestresponse-modification--request-response-modification}
+### 5.请求/响应修改 {#request-response-modification}
 
 **图案概述：**
 在数据发送到 LLM/工具之前或刚收到后修改数据。
@@ -85,7 +85,7 @@ toc: true
 **示例用例：**
 `before_model_callback` `context.state['lang'] == 'es'` `llm_request.config.system_instruction`后会加上“用户语言偏好：西班牙语”。
 
-### 6.步骤条件跳跃 { #conditional-跳跃步骤} {#6-conditional-skipping-of-steps--conditional-skipping-of-steps}
+### 6.步骤条件跳跃 {#conditional-跳跃步骤}
 
 **图案概述：**
 基于特定条件，防止标准操作（Agent 运行、LLM 调用、工具执行）。
@@ -100,7 +100,7 @@ toc: true
 **示例用例：**
 `before_tool_callback`检查`tool_context.state['api_quota_exceeded']`。如果`True`，它会返回`{'error': 'API quota exceeded'}`，阻止实际的工具功能运行。
 
-### 7.工具特定动作（认证与汇总控制） { #tool-特定动作-认证-摘要-控制 } {#7-tool-specific-actions-authentication--summarization-control--tool-specific-actions-authentication-summarization-control}
+### 7.工具特定动作（认证与汇总控制） {#tool-特定动作-认证-摘要-控制}
 
 **图案概述：**
 处理工具生命周期中特定的操作，主要是认证和控制工具结果的 LLM 汇总。
@@ -114,7 +114,7 @@ toc: true
 **示例用例：**
 安全 API 的`before_tool_callback`会检查认证令牌处于状态;如果缺少，则调用`request_credential`。返回结构化JSON的工具`after_tool_callback`可能会设置`skip_summarization = True`。
 
-### 8.Artifact 处理 { #artifact-处理 } {#8-artifact-handling--artifact-handling}
+### 8.Artifact 处理 {#artifact-处理}
 
 **图案概述：**
 在 Agent 生命周期内保存或加载会话相关文件或大型数据块。**实现：**

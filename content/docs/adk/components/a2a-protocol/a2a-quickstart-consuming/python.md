@@ -43,7 +43,7 @@ ADK 内置了一个 CLI 命令 `adk api_server --a2a`，可通过 A2A 协议公�
 
 在 `a2a_basic` 示例中，您首先需要通过 A2A 服务器公开 `check_prime_agent`，以便本地根 Agent 可以使用它。
 
-### 1. 获取示例代码 { #getting-the-sample-code } {#1-getting-the-sample-code--getting-the-sample-code}
+### 1. 获取示例代码 {#getting-the-sample-code}
 
 首先，确保您已安装必要的依赖项：
 
@@ -84,7 +84,7 @@ a2a_basic/
 - **`agent.json`**: A2A Agent 的 Agent 卡
 - **`check_prime(nums: list[int])`**: 质数检查算法
 
-### 2. 启动远程质数 Agent 服务器 { #start-the-remote-prime-agent-server } {#2-start-the-remote-prime-agent-server--start-the-remote-prime-agent-server}
+### 2. 启动远程质数 Agent 服务器 {#start-the-remote-prime-agent-server}
 
 为了展示你的 ADK Agent 如何通过 A2A 调用远程 Agent，你首先需要启动远程 Agent 服务器，该服务器将托管质数 Agent（在 `check_prime_agent` 下）。
 
@@ -120,7 +120,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
 ```
 
-### 3. 注意远程 Agent { #look-out-for-the-required-agent-card-agent-json-of-the-remote-agent } 所需的 Agent 卡 (`agent.json`) {#3-look-out-for-the-required-agent-card-agentjson-of-the-remote-agent--look-out-for-the-required-agent-card-agent-json-of-the-remote-agent}
+### 3. 注意远程 Agent 所需的 Agent 卡 (`agent.json`) {#look-out-for-the-required-agent-card-agent-json-of-the-remote-agent}
 
 A2A 协议要求每个 Agent 都必须有描述其功能的 Agent 卡。
 
@@ -156,7 +156,7 @@ A2A 协议要求每个 Agent 都必须有描述其功能的 Agent 卡。
 
 </details>
 
-### 4. 运行主（使用）Agent { #run-the-main-consuming-agent } {#4-run-the-main-consuming-agent--run-the-main-consuming-agent}
+### 4. 运行主（使用）Agent {#run-the-main-consuming-agent}
 
   ```bash
   # In a separate terminal, run the adk web server

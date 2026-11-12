@@ -154,7 +154,7 @@ async def lifespan(app: Starlette):
 a2a_app = to_a2a(agent, lifespan=lifespan)
 ```
 
-### 获取示例代码 { #getting-the-sample-code } {#getting-the-sample-code--getting-the-sample-code}
+### 获取示例代码 {#getting-the-sample-code}
 
 首先，确保你已安装必要的依赖项：
 
@@ -192,7 +192,7 @@ a2a_root/
 - **`root_agent`**：具有完整指令的主要 Agent
 - **`a2a_app`**：使用 `to_a2a()` 工具创建的 A2A 应用程序
 
-### 启动远程 A2A Agent 服务器 { #start-the-remote-a2a-agent-server } {#start-the-remote-a2a-agent-server--start-the-remote-a2a-agent-server}
+### 启动远程 A2A Agent 服务器 {#start-the-remote-a2a-agent-server}
 
 现在你可以启动远程 Agent 服务器，该服务器将在 hello_world Agent 内托管 `a2a_app`：
 
@@ -217,7 +217,7 @@ INFO:     Application startup complete.
 INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
 ```
 
-### 检查你的远程 Agent 是否正在运行 { #check-that-your-remote-agent-is-running } {#check-that-your-remote-agent-is-running--check-that-your-remote-agent-is-running}
+### 检查你的远程 Agent 是否正在运行 {#check-that-your-remote-agent-is-running}
 
 你可以通过访问之前作为 `to_a2a()` 函数在 `a2a_root/remote_a2a/hello_world/agent.py` 中自动生成的 Agent 卡片来检查你的 Agent 是否已启动并运行：
 
@@ -229,7 +229,7 @@ INFO:     Uvicorn running on http://localhost:8001 (Press CTRL+C to quit)
 {"capabilities":{},"defaultInputModes":["text/plain"],"defaultOutputModes":["text/plain"],"description":"hello world agent that can roll a dice of 8 sides and check prime numbers.","name":"hello_world_agent","protocolVersion":"0.2.6","skills":[{"description":"hello world agent that can roll a dice of 8 sides and check prime numbers. \n      I roll dice and answer questions about the outcome of the dice rolls.\n      I can roll dice of different sizes.\n      I can use multiple tools in parallel by calling functions in parallel(in one request and in one round).\n      It is ok to discuss previous dice roles, and comment on the dice rolls.\n      When I are asked to roll a die, I must call the roll_die tool with the number of sides. Be sure to pass in an integer. Do not pass in a string.\n      I should never roll a die on my own.\n      When checking prime numbers, call the check_prime tool with a list of integers. Be sure to pass in a list of integers. I should never pass in a string.\n      I should not check prime numbers before calling the tool.\n      When I are asked to roll a die and check prime numbers, I should always make the following two function calls:\n      1. I should first call the roll_die tool to get a roll. Wait for the function response before calling the check_prime tool.\n      2. After I get the function response from roll_die tool, I should call the check_prime tool with the roll_die result.\n        2.1 If user asks I to check primes based on previous rolls, make sure I include the previous rolls in the list.\n      3. When I respond, I must include the roll_die result from step 1.\n      I should always perform the previous 3 steps when asking for a roll and checking prime numbers.\n      I should not rely on the previous history on prime results.\n    ","id":"hello_world_agent","name":"model","tags":["llm"]},{"description":"Roll a die and return the rolled result.\n\nArgs:\n  sides: The integer number of sides the die has.\n  tool_context: the tool context\nReturns:\n  An integer of the result of rolling the die.","id":"hello_world_agent-roll_die","name":"roll_die","tags":["llm","tools"]},{"description":"Check if a given list of numbers are prime.\n\nArgs:\n  nums: The list of numbers to check.\n\nReturns:\n  A str indicating which number is prime.","id":"hello_world_agent-check_prime","name":"check_prime","tags":["llm","tools"]}],"supportsAuthenticatedExtendedCard":false,"url":"http://localhost:8001","version":"0.0.1"}
 ```
 
-### 运行主（消费）Agent { #run-the-main-consuming-agent } {#run-the-main-consuming-agent--run-the-main-consuming-agent}
+### 运行主（消费）Agent {#run-the-main-consuming-agent}
 
 现在您的远程 Agent 正在运行，您可以启动开发 UI 并选择 “a2a_root” 作为您的 Agent。
 

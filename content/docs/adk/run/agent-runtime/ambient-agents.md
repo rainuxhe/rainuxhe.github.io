@@ -270,9 +270,6 @@ adk api_server --trigger_sources "pubsub,eventarc" path/to/your/agent
 <details>
 <summary>部署入口点 (`main.py`)</summary>
 
-{{< tabs tabTotal="1" >}}
-{{% tab tabName="Python" %}}
-
 ```python
 import os
 
@@ -291,8 +288,6 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
 ```
 
-{{% /tab %}}
-{{< /tabs >}}
 </details>
 {{% /tab %}}
 {{% tab tabName="Go" %}}

@@ -16,7 +16,7 @@ toc: true
 并且安装了 Python 3.10 或 Java 17，并且可以访问终端。该方法将在
 您的电脑上完全运行应用程序，推荐用于内部开发。
 
-## 1. 设置环境并安装 ADK { #set-up-environment-install-adk } {#1-set-up-environment--install-adk--set-up-environment-install-adk}
+## 1. 设置环境并安装 ADK {#set-up-environment-install-adk}
 
 {{< tabs tabTotal="2" >}}
 {{% tab tabName="Python" %}}
@@ -63,7 +63,7 @@ go get google.golang.org/adk/v2
 {{% /tab %}}
 {{< /tabs >}}
 
-## 2. 创建 Agent 项目 { #create-agent-project } {#3-set-up-the-model--set-up-the-model}
+## 2. 创建 Agent 项目 {#create-agent-project}
 
 ### 项目结构 {#model-connection-and-authentication}
 
@@ -110,22 +110,18 @@ from . import agent
 
 在同一文件夹中创建一个 `agent.py` 文件：
 
-{{< tabs tabTotal="2" >}}
-{{% tab tabName="OS X &amp; Linux" %}}
+**macOS / Linux**
 
 ```shell
 touch multi_tool_agent/agent.py
 ```
 
-{{% /tab %}}
-{{% tab tabName="Windows" %}}
+**Windows**
 
 ```shell
 type nul > multi_tool_agent/agent.py
 ```
 
-{{% /tab %}}
-{{< /tabs >}}
 将以下代码复制并粘贴到 `agent.py` 中：
 
 ```python title="multi_tool_agent/agent.py"
@@ -214,22 +210,18 @@ root_agent = Agent(
 
 在同一文件夹中创建一个 `.env` 文件：
 
-{{< tabs tabTotal="2" >}}
-{{% tab tabName="OS X &amp; Linux" %}}
+**macOS / Linux**
 
 ```shell
 touch multi_tool_agent/.env
 ```
 
-{{% /tab %}}
-{{% tab tabName="Windows" %}}
+**Windows**
 
 ```shell
 type nul > multi_tool_agent\.env
 ```
 
-{{% /tab %}}
-{{< /tabs >}}
 有关此文件的更多说明在下一部分关于[设置模型](#set-up-the-model)中描述。
 {{% /tab %}}
 {{% tab tabName="Go" %}}
@@ -247,22 +239,18 @@ my-adk-agent/
 
 在你的项目文件夹中创建一个 `agent.go` 文件：
 
-{{< tabs tabTotal="2" >}}
-{{% tab tabName="OS X &amp; Linux" %}}
+**macOS / Linux**
 
 ```bash
 touch agent.go
 ```
 
-{{% /tab %}}
-{{% tab tabName="Windows" %}}
+**Windows**
 
 ```console
 type nul > agent.go
 ```
 
-{{% /tab %}}
-{{< /tabs >}}
 将以下代码复制并粘贴到 `agent.go` 中：
 
 ```go title="agent.go"
@@ -388,15 +376,13 @@ func main() {
 
 在同一文件夹中创建一个 `.env` 文件：
 
-{{< tabs tabTotal="2" >}}
-{{% tab tabName="OS X &amp; Linux" %}}
+**macOS / Linux**
 
 ```bash
 touch .env
 ```
 
-{{% /tab %}}
-{{% tab tabName="Windows" %}}
+**Windows**
 
 ```console
 type nul > .env
@@ -404,12 +390,10 @@ type nul > .env
 
 {{% /tab %}}
 {{< /tabs >}}
-{{% /tab %}}
-{{< /tabs >}}
 
 ![intro_components.png](/images/adk/quickstart-flow-tool.png)
 
-## 3. 设置模型 { #set-up-the-model }
+## 3. 设置模型 {#set-up-the-model}
 
 您的 Agent 理解用户请求并生成响应的能力依赖于生成型 AI 模型或大型语言模型 (LLM)。本指南使用 Gemini 模型作为示例，但 ADK 兼容 Google 和其他提供商的多种 AI 模型。有关可用模型及其配置方法的详细信息，请参见 [ADK Agent 的 AI 模型](/docs/adk/build/models-for-agents/)。
 
@@ -441,7 +425,7 @@ GOOGLE_GENAI_USE_ENTERPRISE=True
 包括 Gemini Enterprise Agent 平台，请参阅
 [连接到 Google Cloud 和 Agent 平台](/docs/adk/build/get-started/google-cloud/)指南。
 
-## 4. 运行您的 Agent { #run-your-agent }
+## 4. 运行您的 Agent {#run-your-agent}
 
 {{< tabs tabTotal="2" >}}
 {{% tab tabName="Python" %}}
@@ -459,8 +443,7 @@ parent_folder/      <-- navigate to this directory
 
 与您的 Agent 进行交互有多种方式：
 
-{{< tabs tabTotal="3" >}}
-{{% tab tabName="Dev UI (adk web)" %}}
+**开发者界面（adk web）**
 
 {{% alert context="success" %}}
 **Agent 平台用户的身份验证设置**
@@ -535,8 +518,7 @@ root_agent = Agent(
 
 ![adk-web-dev-ui-audio.png](/images/adk/adk-web-dev-ui-audio.png)
 
-{{% /tab %}}
-{{% tab tabName="Terminal (adk run)" %}}
+**终端（adk run）**
 
 {{% alert context="success" %}}
 
@@ -557,16 +539,14 @@ adk run multi_tool_agent
 ![adk-run.png](/images/adk/adk-run.png)
 
 要退出，请使用 Cmd/Ctrl C。
-{{% /tab %}}
-{{% tab tabName="API Server (adk api_server)" %}}
+
+**API 服务器（adk api_server）**
 
 `adk api_server` 使您能够通过单个命令创建本地 FastAPI 服务器，从而在部署 Agent 之前测试本地 cURL 请求。
 
 ![adk-api-server.png](/images/adk/adk-api-server.png)
 
 有关如何使用 `adk api_server` 进行测试的详细信息，请参考[使用 API 服务器的文档](/docs/adk/run/agent-runtime/api-server/)。
-{{% /tab %}}
-{{< /tabs >}}
 {{% /tab %}}
 {{% tab tabName="Go" %}}
 
@@ -581,8 +561,7 @@ my-adk-agent/      <-- navigate to this directory
 
 与您的 Agent 互动有多种方式：
 
-{{< tabs tabTotal="2" >}}
-{{% tab tabName="Dev UI (web)" %}}
+**开发者界面（web）**
 
 运行以下命令以启动 **开发者界面（dev UI）**。您必须指定要激活的子启动器（例如，`webui`、`api`）。
 
@@ -595,8 +574,8 @@ go run agent.go web webui api
 **步骤 2:** 在界面左上角的下拉菜单中选择你的 Agent，应为 "weather_time_agent"。
 
 **步骤 3:** 现在你可以使用文本框与 Agent 进行聊天。
-{{% /tab %}}
-{{% tab tabName="Terminal (console)" %}}
+
+**终端（console）**
 
 在终端中运行以下命令以与 Agent 聊天。
 
@@ -607,8 +586,6 @@ go run agent.go console
 **注意:** 如果 `console` 是你代码中的第一个子启动器（就像 `full.NewLauncher()` 那样），你也可以直接运行 `go run agent.go`。
 
 要退出，请使用 Cmd/Ctrl C。
-{{% /tab %}}
-{{< /tabs >}}
 {{% /tab %}}
 {{< /tabs >}}
 

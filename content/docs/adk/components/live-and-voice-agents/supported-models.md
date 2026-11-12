@@ -13,7 +13,7 @@ toc: true
 - **[语音到语音](/docs/adk/components/live-and-voice-agents/architectures/speech-to-speech/)**：单个原生音频实时模型通过双向连接直接处理音频输入和音频输出。
 - **[级联](/docs/adk/components/live-and-voice-agents/architectures/cascade/)**：按顺序链式连接语音转文本、任意文本 LLM 和文本转语音。
 
-## 原生音频模型 { #live-models } {#native-audio-models--live-models}
+## 原生音频模型 {#live-models}
 
 原生音频模型端到端接收音频并输出音频，没有中间的文本转语音阶段。这让它们在单一双向连接上拥有自然的语调。
 
