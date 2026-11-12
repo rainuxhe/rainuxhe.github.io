@@ -3,3 +3,4 @@ public
 .marscode/
 tmp/
 resources/_gen/
+/assets/jsconfig.json
