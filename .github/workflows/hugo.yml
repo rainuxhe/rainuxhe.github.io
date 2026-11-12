@@ -32,6 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.169.0
+      DART_SASS_VERSION: 1.93.2
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,7 +43,32 @@ jobs:
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
-        run: sudo snap install dart-sass
+        run: |
+          case "${RUNNER_ARCH}" in
+            X64) sass_arch="x64" ;;
+            ARM64) sass_arch="arm64" ;;
+            *)
+              echo "Unsupported architecture: ${RUNNER_ARCH}" >&2
+              exit 1
+              ;;
+          esac
+
+          sass_archive="dart-sass-${DART_SASS_VERSION}-linux-${sass_arch}.tar.gz"
+
+          curl --fail --location \
+            --retry 8 --retry-delay 3 --retry-all-errors \
+            --connect-timeout 15 \
+            --output "${RUNNER_TEMP}/${sass_archive}" \
+            "https://github.com/sass/dart-sass/releases/download/${DART_SASS_VERSION}/${sass_archive}"
+
+          tar --extract --gzip \
+            --file "${RUNNER_TEMP}/${sass_archive}" \
+            --directory "${RUNNER_TEMP}"
+
+          echo "${RUNNER_TEMP}/dart-sass" >> "${GITHUB_PATH}"
+
+      - name: Verify Dart Sass
+        run: sass --version
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
