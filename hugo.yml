@@ -146,6 +146,12 @@ params:
       description: "A2A 官方核心文档中文翻译，以及 Python 客户端和服务端示例。"
       icon: "hub"
       weight: 40
+    - id: "adk"
+      title: "Agent Development Kit (ADK)"
+      path: "/docs/adk/"
+      description: "Google ADK 官方文档中文翻译，覆盖构建、运行和组件三大主题，示例以 Python 和 Go 为主。"
+      icon: "smart_toy"
+      weight: 50
 
   flexsearch:
     enabled: true

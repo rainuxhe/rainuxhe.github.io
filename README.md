@@ -1,6 +1,6 @@
 # Bookstack
 
-Bookstack is a multi-document Hugo site published at <https://gh.heruos.top/>. It currently contains FastAPI and PostgreSQL documentation examples.
+Bookstack is a multi-document Hugo site published at <https://gh.heruos.top/>. It contains BookStack usage notes, the Chinese A2A protocol documentation, and Chinese translations of Google's Agent Development Kit (ADK) documentation.
 
 ## Prerequisites
 
