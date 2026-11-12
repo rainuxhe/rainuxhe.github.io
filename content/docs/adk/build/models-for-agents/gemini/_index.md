@@ -74,6 +74,7 @@ import (
 请使用来自 [双子座模型](https://ai.google.dev/gemini-api/docs/models) 页面或 Google Cloud [双子座模型](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models) 列表的特定模型版本字符串。
 
 </details>
+
 ## 双子座模型认证 {#gemini-model-authentication}
 
 当通过服务使用 AI 模型时，例如 Gemini API 或 Google Cloud 上的

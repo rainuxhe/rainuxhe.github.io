@@ -66,6 +66,7 @@ app = App(
 
 在您的 Agent 项目代码中，将您的 ***App*** 对象设置为变量名 `app`，以便与 ADK 命令行接口运行工具兼容。
 {{% /alert %}}
+
 ### 运行您的 App Agent {#run-your-app-agent}
 
 您可以使用 ***Runner*** 类，通过 `app` 参数运行您的 Agent 工作流，如下面的代码示例所示：
@@ -113,6 +114,7 @@ python3 main.py
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ## 下一步 {#next-steps}
 
 有关更完整的示例代码实现，请参阅

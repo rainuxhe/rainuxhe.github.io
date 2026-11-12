@@ -35,6 +35,7 @@ ADK 提供三种互补的多步骤工作组合方式：
 - **[动态工作流](/docs/adk/build/graph-workflows/dynamic-workflows/)：** 在你自己的代码中进行编程化编排（循环、条件、递归）——当控制流程对于静态图过于复杂或迭代时，最为合适。
 - **[预构建工作流 Agent](/docs/adk/build/multi-agent-workflows/template-workflows/)**（顺序、并行、循环）：用于常见模式的高层次构建块，无需自己组装图。
 {{% /alert %}}
+
 ## 快速开始 {#get-started}
 
 本节介绍如何开始使用基于图的 Agent。以下示例演示如何创建一个顺序的基于图的 Agent 工作流，该工作流生成一个城市名称，通过代码函数查询该城市的当前时间，最终 Agent 报告该信息。
@@ -315,6 +316,7 @@ func newProcessPipeline() (agent.Agent, error) {
 
 使用 `GlobalInstructionPlugin` 在您的 `App`（[Python](https://github.com/google/adk-python/blob/main/src/google/adk/plugins/global_instruction_plugin.py)、[TypeScript](https://github.com/google/adk-js/blob/main/core/src/plugins/global_instruction_plugin.ts)、[Java](https://github.com/google/adk-java/blob/main/core/src/main/java/com/google/adk/plugins/GlobalInstructionPlugin.java)） 或 Agent 的 `GlobalInstruction` 参数（[Go](https://github.com/google/adk-go/blob/main/agent/llmagent/llmagent.go)）上，在整个工作流中应用一致的规则。
 {{% /alert %}}
+
 ## 已知限制 {#known-limitations}
 
 基于图的工作流存在一些已知限制。它们 *不兼容* 以下 ADK 功能：
@@ -326,6 +328,7 @@ func newProcessPipeline() (agent.Agent, error) {
 
 ADK Go 中的 `workflow` 包是 Python `Workflow` 类的直接对应物。使用 `workflow.NewFunctionNode` 和 `workflow.NewAgentNode` 来定义节点，`workflow.Chain` 或 `workflow.Concat` 与 `[]workflow.Edge` 来连接它们，使用 `workflowagent.New` 将图包装为可运行的 Agent。条件路由使用 `workflow.StringRoute`、`workflow.IntRoute` 或 `workflow.BoolRoute` 与 `event.Routes` 匹配。汇聚由 `workflow.NewJoinNode` 处理。
 {{% /alert %}}
+
 ## 下一步 {#next-steps}
 
 有关高级路由模式及分支/汇合示例，请参见 [为工作流 Agent 构建图路线](/docs/adk/build/graph-workflows/graph-routes/)。对于预构建的更高级替代方案（顺序、并行、循环），请参见 [预构建工作流 Agent](/docs/adk/build/multi-agent-workflows/template-workflows/)。

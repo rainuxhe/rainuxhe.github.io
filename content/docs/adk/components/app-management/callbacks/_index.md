@@ -129,6 +129,7 @@ func runBasicExample() {
 {{% /tab %}}
 {{< /tabs >}}
 </details>
+
 ## 回调机制：拦截与控制 {#the-callback-mechanism-interception-and-control}
 
 当 ADK 框架遇到可以运行回调的点（例如，在调用 LLM 之前），它会检查你是否为该 Agent 提供了相应的回调函数。如果提供了，框架会执行你的函数。

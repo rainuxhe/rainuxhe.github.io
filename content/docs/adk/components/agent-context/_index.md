@@ -105,6 +105,7 @@ async for event in runner.run_async(
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ## 语境类型 {#types-of-context}
 
 ADK 使用`Context`类作为管理 Agent 环境、状态和资源的核心机制。虽然`Context`是所有 Agent 交互的基础，但它体现为专门的“类型”，旨在根据执行流中能力和权限的使用位置提供适当的平衡。
@@ -120,6 +121,7 @@ ADK 使用`Context`类作为管理 Agent 环境、状态和资源的核心机制
 - **`ToolContext`**：专为工具执行和相关回调设计。除了上下文的功能外，它还包括认证流程、内存搜索和 Artifact 发现等专用方法。{{% alert context="info" %}}
 **关于兼容性**：在 Python 和 TypeScript 中，`CallbackContext` 和 `ToolContext` 已被 `Context` 类型取代。`CallbackContext` 类被保留作为 `Context` 的别名，以确保向后兼容。虽然您可能会在现有代码库中遇到 `CallbackContext`，**但对于所有新开发，您应使用 `Context` 类**以利用完整的统一功能集。
 {{% /alert %}}
+
 ### `InvocationContext` {#invocationcontext}
 - **使用场景:** 作为 `ctx` 参数直接传入 Agent 核心实现方法中（`_run_async_impl`、`_run_live_impl`）。
 - **目的:** 提供对当前调用的整个状态的访问。这是最全面的上下文对象。
@@ -175,6 +177,7 @@ ADK 使用`Context`类作为管理 Agent 环境、状态和资源的核心机制
 
     {{% /tab %}}
     {{< /tabs >}}
+
 ### `ReadonlyContext` {#readonlycontext}
 - **使用场景:** 在只需要读取基本信息且不允许修改的场景中提供（例如，`InstructionProvider` 函数）。它也是其他上下文的基类。
 - **目的:** 提供对基本上下文细节的安全只读视图。
@@ -219,6 +222,7 @@ ADK 使用`Context`类作为管理 Agent 环境、状态和资源的核心机制
 
     {{% /tab %}}
     {{< /tabs >}}
+
 ### `CallbackContext` 和 `Context` {#callbackcontext-and-context}
 
 - **使用场景：** 作为 `callback_context` 传递给 Agent 生命周期回调（`before_agent_callback`、`after_agent_callback`）和模型交互回调（`before_model_callback`、`after_model_callback`）。
@@ -285,6 +289,7 @@ func myBeforeModelCb(ctx agent.Context, req *model.LLMRequest) (*model.LLMRespon
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ### `ToolContext` {#toolcontext}
 - **使用场景:** 作为 `tool_context` 传递给支持 `FunctionTool` 的函数以及工具执行回调（`before_tool_callback`, `after_tool_callback`）。
 - **目的:** 提供 `CallbackContext` 所具备的全部功能，加上工具执行所必需的专门方法，例如处理认证、搜索内存和列出 Artifact。
@@ -536,6 +541,7 @@ func myBeforeModelCb(ctx agent.Context, req *model.LLMRequest) (*model.LLMRespon
 
     {{% /tab %}}
     {{< /tabs >}}
+
 ### 管理状态 {#manage-state}
 
 状态对于内存和数据流至关重要。当你使用 `CallbackContext` 或 `ToolContext` 修改状态时，框架会自动跟踪并持久化这些更改。
@@ -870,6 +876,7 @@ func myBeforeModelCb(ctx agent.Context, req *model.LLMRequest) (*model.LLMRespon
 
     {{% /tab %}}
     {{< /tabs >}}
+
 ### 处理工具认证 {#handle-tool-authentication}
 
 支持版本：Python v0.1.0。
@@ -967,6 +974,7 @@ async def find_related_info(tool_context: ToolContext, topic: str) -> dict:
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ### 渲染 UI 小部件 {#render-ui-widgets}
 
 支持版本：Python v1.27.0。
@@ -999,6 +1007,7 @@ def render_styled_widget(color: str, context: ToolContext) -> str:
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ### 高级：直接使用 `InvocationContext` {#advanced-direct-invocationcontext-usage}
 
 支持版本：Python v0.1.0。

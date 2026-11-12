@@ -9,6 +9,7 @@ toc: true
 支持版本：Python v0.1.0, Go v0.1.0。
 
 **MCP（MCP）** 是一个用于将生成式 AI 模型连接到外部数据源、工具和系统的开放标准。可以将其视为一种通用的连接机制，简化大型语言模型获取上下文、执行操作以及与各种系统交互的方式。
+
 ## 核心架构和概念 {#core-architecture-and-concepts}
 
 MCP 遵循客户端-服务器架构，定义 MCP 服务器如何公开数据或资源、交互式模板或提示，以及可操作的函数或工具，并由 MCP 客户端（可能是 LLM 托管应用程序或 AI Agent）进行消耗。在 ADK 中，你可以使用 McpToolset 类作为 MCP 服务器和 ADK Agent 之间的接口。还可以将 ADK 服务器配置为 MCP 服务器，以供其他客户端系统使用。
@@ -65,6 +66,7 @@ Get-Command npx
 
 部署到生产环境的 Agent**必须在`agent.py`中同步定义`McpToolset`**。动态异步 Agent 初始化仅支持本地调试或自定义独立 Runner。
 {{% /alert %}}
+
 ## 理解用途和集成 {#understand-uses-and-integrations}
 
 主要有三种集成模式。本页面涵盖了直接集成，其他实现方式在各自的页面中详细介绍。
@@ -86,6 +88,7 @@ Get-Command npx
 {{% alert context="info" %}}
 **状态恢复**尽管 ADK Agent 在生命周期事件期间会保留会话状态，但它们在恢复时不会自动重新建立活动的 MCP 连接。Agent 会根据需要重新初始化连接。
 {{% /alert %}}
+
 ### 直接 MCP 工具集成 (McpToolset) {#direct-mcp-tool-integration-mcptoolset}
 
 `McpToolset` 类可以直接添加到您的 Agent 工具列表中；该类可以无缝连接到 MCP 服务器，发现其工具，并使它们可供 Agent 使用。`McpToolset` 管理与 MCP 服务器的连接。构建工具集并不会立即连接；它会在首次使用时打开会话，例如当 Agent 请求其工具时。它还处理 Agent 或进程终止时的优雅连接关闭。
@@ -200,6 +203,7 @@ func main() {
 
 {{% /tab %}}
 {{< /tabs >}}
+
 #### 示例：远程 HTTP / SSE 传输（Google 地图基础 Lite） {#example-remote-http--sse-transport-google-maps-grounding-lite}
 
 在开始之前，请按照 [Google 地图基础 Lite](https://developers.google.com/maps/ai/grounding-lite) 的说明，在您的 Google Cloud 项目中启用该服务并生成您的 Maps Platform API 密钥。
@@ -254,6 +258,7 @@ root_agent = LlmAgent(
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ## 远程 MCP 身份验证和资源访问 {#remote-mcp-authentication-and-resource-access}
 
 本节向您展示如何使用身份验证连接到远程 MCP 服务器，以及如何读取 MCP 服务器公开的 **资源** 数据。当 MCP 服务器需要身份验证时，如通过 Server-Sent Events `SseConnectionParams` 或 Streamable HTTP，`McpToolset` 会自动处理凭证注入和令牌管理。
@@ -293,6 +298,7 @@ toolset = McpToolset(
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ## 访问 MCP 资源 {#accessing-mcp-resources}
 
 除了可执行的 **工具** 外，MCP 服务器还可以公开 **资源** 数据文件、数据库记录或 API 上下文数据块。
@@ -327,6 +333,7 @@ async def fetch_mcp_data(toolset):
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ## 故障排除和最佳实践检查表 {#troubleshooting--best-practices-checklist}
 
 * **安全性与范围**：始终在`McpToolset`中提供`tool_filter=[...]`，以仅向您的 LLM 暴露必要的操作。

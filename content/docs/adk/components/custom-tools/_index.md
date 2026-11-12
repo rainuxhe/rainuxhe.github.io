@@ -22,6 +22,7 @@ toc: true
 
 在为 ADK 构建自己的工具之前，先查看 **[ADK 工具与集成（官方英文）](https://adk.dev/integrations/)**，了解可与 ADK Agent 一起使用的预构建工具和集成。
 {{% /alert %}}
+
 ## 什么是工具？ {#what-is-a-tool}
 
 在 ADK 的上下文中，工具代表提供给 AI Agent 的特定功能，使其能够执行操作并与其核心文本生成和推理能力之外的世界进行交互。能够 Agent 与基础语言模型的区别通常在于其有效使用工具的能力。
@@ -334,6 +335,7 @@ func run(ctx context.Context, r *runner.Runner, sessionID string, prompt string)
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ## ToolContext {#tool-context}
 
 对于更高级的场景，ADK 允许您通过在工具函数中包含特殊参数 `tool_context: ToolContext` 来访问额外的上下文信息。通过在函数签名中包含它，当 Agent 执行过程中调用您的工具时，ADK 将**自动**提供一个**ToolContext 类的实例**。
@@ -459,6 +461,7 @@ func updateUserPreference(ctx agent.Context, args updateUserPreferenceArgs) (*up
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ### **控制 Agent 流** {#controlling-agent-flow}
 
 Python 和 TypeScript 中的 `tool_context.actions` 属性、Java 中的 `ToolContext.actions()` 属性以及 Go 中的 `agent.Context.Actions()` 属性，保存了一个 **EventActions** 对象。修改此对象的属性可以让你的工具影响工具执行完成后 Agent 或框架的行为。
@@ -686,6 +689,7 @@ func run(ctx context.Context, r *runner.Runner, sessionID string, prompt string)
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ##### 说明 {#explanation}
 
 * 我们定义了两个 Agent：`main_agent` 和 `support_agent`。`main_agent` 被设计为初始接触点。

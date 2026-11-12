@@ -167,6 +167,7 @@ inMemoryService := session.InMemoryService()
 
 {{% /tab %}}
 {{< /tabs >}}
+
 ### `VertexAiSessionService` {#vertexaisessionservice}
 
 支持版本：Python v0.1.0, Go v0.1.0。
@@ -281,6 +282,7 @@ Go 会话服务不会创建或更新其表。每次应用启动时，在处理�
 {{% /alert %}}
 {{% /tab %}}
 {{< /tabs >}}
+
 #### 并发与锁定 {#concurrency-and-locking}
 
 `DatabaseSessionService` 通过双层锁定架构确保在并发操作中的数据完整性：
@@ -298,6 +300,7 @@ Go 会话服务不会创建或更新其表。每次应用启动时，在处理�
 
 ADK Python v1.22.0 中会话数据库的模式发生了变化，这需要迁移会话数据库。更多信息请参见 [Session database schema migration](/docs/adk/components/agent-context/sessions/migrate-sessions/)。
 {{% /alert %}}
+
 ## 会话错误排查 {#troubleshoot-session-errors}
 
 在执行过程中，ADK 可能会抛出特定异常，以帮助您识别配置或状态问题。

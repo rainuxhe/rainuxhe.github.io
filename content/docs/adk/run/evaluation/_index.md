@@ -305,6 +305,7 @@ evalset 方法利用一个专门的数据集，称为“evalset”，用于评�
 在 `adk conformance` 命令执行有意义的回归测试之前，您必须建立一个最佳的“黄金基线”。一致性测试通过将实时 Agent 行为与先前记录和验证的交互进行比较来运行。
 
 按照以下工作流程准备您的环境：
+
 ##### 创建测试目录层次结构 {#create-the-test-directory-hierarchy}
 
 一致性测试依赖严格的文件布局来自动发现和映射测试用例。
@@ -323,6 +324,7 @@ tests
 
 如果您的 Agent 使用服务器发送事件（SSE），测试框架还会在同一文件夹中查找 `generated-recordings-sse.yaml` 和 `generated-session-sse.yaml`。
 {{% /alert %}}
+
 ##### 定义测试规范 (spec.yaml) {#define-the-test-specification-specyaml}
 
 在目标测试文件夹中，创建一个 `spec.yaml` 文件。该文件概述了 Agent 在基线记录和后续一致性运行期间将执行的初始条件、配置和用户提示。确保您的文件符合以下基础模式，此处仅为示例：
